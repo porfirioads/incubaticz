@@ -6,9 +6,11 @@ comunicación (INCUBATICZ)
 
 ## Instrucciones de instalación
 
-1. Clonar el proyecto
-2. Asegurarse de tener instalado composer, npm, bower y gulp
-3. Ejecutar los siguientes comandos en la terminal:
+**Clonar el proyecto**
+
+**Asegurarse de tener instalado composer, npm, bower y gulp**
+
+**Ejecutar los siguientes comandos en la terminal:**
 
 ```bash
 sudo chmod 777 storage
@@ -18,6 +20,37 @@ bower install
 gulp watch
 php artisan cache:clear
 ``` 
+
+**Copiar el archivo .env.example y renombrarlo a .env**
+```
+cp .env.example .env
+```
+
+**Configurar la base de datos en el archivo .env:**
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mydatabase
+DB_USERNAME=myuser
+DB_PASSWORD=mypassword
+```
+
+**Generar la llave para la aplicación**
+```
+php artisan key:generate
+```
+
+**Correr las migraciones y seeders:**
+```
+php artisan migrate:refresh --seed
+```
+
+**Correr proyecto:**
+```
+php artisan serve --host 0.0.0.0 --port 8000
+```
+
 
 ## Solución de errores
 
