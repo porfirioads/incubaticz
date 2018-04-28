@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url ('') }}">SB Admin v2.0 | Laravel 5</a>
+                <a class="navbar-brand" href="{{ url ('') }}">INCUBATICZ</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -245,7 +245,8 @@
                             <!-- /input-group -->
                         </li>
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="{{ url ('') }}"><i class="fa
+                            fa-dashboard fa-fw"></i> Ficha Técnica</a>
                         </li>
                         <li {{ (Request::is('*charts') ? 'class="active"' : '') }}>
                             <a href="{{ url ('charts') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Charts</a>
