@@ -21,6 +21,11 @@ Route::get('/convocatoria', function()
     return View::make('convocatoria');
 });
 
+Route::get('/registro', function()
+{
+    return View::make('registro');
+});
+
 Route::get('/charts', function()
 {
 	return View::make('mcharts');

@@ -272,7 +272,12 @@
                             <a href="{{ url ('convocatoria') }}"><i
                                         class="fa fa-bar-chart-o fa-fw"></i>
                                 Convocatoria</a>
-                            <!-- /.nav-second-level -->
+                        </li>
+                        <li {{ (Request::is('*registro') ? 'class="active"' :
+                         '') }}>
+                            <a href="{{ url ('registro') }}"><i
+                                        class="fa fa-bar-chart-o fa-fw"></i>
+                                Registro</a>
                         </li>
                         <li {{ (Request::is('*charts') ? 'class="active"' : '') }}>
                             <a href="{{ url ('charts') }}"><i
