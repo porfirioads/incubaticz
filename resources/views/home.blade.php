@@ -11,7 +11,7 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @section ('pane2_panel_title', 'Ficha Técnica INCUBATICZ')
                 @section ('pane2_panel_body')
                     <ul class="timeline">
@@ -177,7 +177,9 @@
                 @endsection
                 @include('widgets.panel', array('header'=>true, 'as'=>'pane2'))
             </div>
-            <div class="col-lg-4">
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 @section ('pane1_panel_title', 'Notas')
                 @section ('pane1_panel_body')
                     <div class="list-group">
