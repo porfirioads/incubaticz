@@ -4,6 +4,13 @@
 @section('section')
     <div class="col-sm-12">
         <div class="row">
+            <div class="col-lg-12">
+                <img src="{{URL::asset('assets/img/Incubaticz flyer.png')}}"
+                     class="img-responsive"/>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
             <div class="col-lg-8">
                 @section ('pane2_panel_title', 'Ficha Técnica INCUBATICZ')
                 @section ('pane2_panel_body')
