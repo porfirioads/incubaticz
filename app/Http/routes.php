@@ -16,6 +16,11 @@ Route::get('/', function()
 	return View::make('home');
 });
 
+Route::get('/convocatoria', function()
+{
+    return View::make('convocatoria');
+});
+
 Route::get('/charts', function()
 {
 	return View::make('mcharts');
