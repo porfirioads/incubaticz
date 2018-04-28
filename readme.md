@@ -1,22 +1,28 @@
-# SB Admin v2.0 rewritten in Laravel
+# INCUBATICZ
 
-This project is a part of the famous Free Admin Bootstrap Theme SB Admin v2.0 to Laravel Theme.
+Este proyecto es una plataforma para el registro de proyectos al Programa de 
+apoyo para la incubación de empresas de tecnologías de información y 
+comunicación (INCUBATICZ)
 
-Find out more [Free Laravel Themes at StartLaravel.com](http://www.startlaravel.com/)..
+## Instrucciones de instalación
 
-## Installation
+1. Clonar el proyecto
+2. Asegurarse de tener instalado composer, npm, bower y gulp
+3. Ejecutar los siguientes comandos en la terminal:
 
-1. Clone this project or Download that ZIP file
-2. Make sure you have bower, gulp and npm installed globally
-3. On the command prompt run the following commands
-- cd `project-directory`
-- Set permission 777 for storage
-- `composer install`
-- `npm install`
-- `bower install`
-- `gulp watch`
-- `php artisan cache:clear`
+```bash
+sudo chmod 777 storage
+composer install
+npm install
+bower install
+gulp watch
+php artisan cache:clear
+``` 
 
-### Automation tools
+## Solución de errores
 
-- [Gulp](http://gulpjs.com/)
+**laravel/framework v5.x.x requires ext-mcrypt:**
+
+```bash
+sudo apt-get install php7.0-mcrypt
+```
