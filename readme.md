@@ -43,7 +43,7 @@ php artisan key:generate
 
 **Correr las migraciones y seeders:**
 ```
-php artisan migrate:refresh --seed
+php artisan migrate:fresh --seed
 ```
 
 **Correr proyecto:**

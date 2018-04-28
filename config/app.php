@@ -145,6 +145,11 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
+        /*
+         * Laravel 5.1 upgrade providers
+         */
+        'Illuminate\Broadcasting\BroadcastServiceProvider',
+
 	],
 
 	/*
