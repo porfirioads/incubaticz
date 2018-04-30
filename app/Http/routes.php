@@ -26,6 +26,8 @@ Route::get('/registro', function()
     return View::make('registro');
 });
 
+Route::post('/registro', 'ProyectoController@registrarProyecto');
+
 Route::get('/charts', function()
 {
 	return View::make('mcharts');

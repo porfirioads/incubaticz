@@ -2,10 +2,24 @@
 @section('page_heading', 'Registro')
 
 @section('section')
+    @if (count($errors) > 0)
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger alert-dismissable">
+                    @foreach($errors as $error)
+                        <p>{{$error}}</p>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-lg-12">
-            <form role="form">
+            <form role="form" action="{{URL('/registro')}}"
+                  enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 @section ('dpanel_panel_title', 'Datos de los integrantes')
 
@@ -14,7 +28,8 @@
                     <div class="form-group">
                         <label for="selIntegrantes">Cantidad de
                             integrantes:</label>
-                        <select id="selIntegrantes" class="form-control">
+                        <select id="selIntegrantes" name="selIntegrantes"
+                                class="form-control">
                             <option selected="selected" disabled="disabled"
                                     value="0"></option>
                             <option value="3">3</option>
@@ -68,9 +83,18 @@
                                 <div class="form-group nivelEstudios">
                                     <label>Nivel de estudios:</label>
                                     <select class="form-control">
-                                        <option>Por egresar</option>
-                                        <option>Licenciatura</option>
-                                        <option>Posgrado</option>
+                                        <option selected="selected"
+                                                disabled="disabled"
+                                                value="0"></option>
+                                        <option value="Por egresar">
+                                            Por egresar
+                                        </option>
+                                        <option value="Licenciatura">
+                                            Licenciatura
+                                        </option>
+                                        <option value="Posgrado">
+                                            Posgrado
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -149,9 +173,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Responsable del
+                                <label for="selResponsable">Responsable del
                                     proyecto:</label>
-                                <select class="form-control">
+                                <select id="selResponsable"
+                                        name="selResponsable"
+                                        class="form-control">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -163,9 +189,9 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Anteproyecto (20
-                                    cuartillas):</label>
-                                <input type="file">
+                                <label>Anteproyecto (20 cuartillas):</label>
+                                <input id="anteproyecto" name="anteproyecto"
+                                       type="file">
                             </div>
                         </div>
                     </div>
@@ -175,7 +201,8 @@
                             (250 palabras):</label>
                         <input id="txtNombreProyecto" name="txtNombreProyecto"
                                class="form-control txtWithWordCounter"
-                               data-max_words="250">
+                               data-max_words="250"
+                               value="{{old('txtNombreProyecto')}}">
                     </div>
 
                     <div class="form-group">

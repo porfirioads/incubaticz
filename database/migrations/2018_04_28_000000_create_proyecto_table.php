@@ -25,7 +25,7 @@ class CreateProyectoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('titulo');
-            $table->string('anteproyecto');
+            $table->string('anteproyecto')->nullable();
             $table->string('descripción', 250);
             $table->string('impacto', 250);
             $table->string('factibilidad');
