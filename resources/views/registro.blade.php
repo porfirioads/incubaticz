@@ -10,115 +10,131 @@
                 @section ('dpanel_panel_title', 'Datos de los integrantes')
 
                 @section ('dpanel_panel_body')
-                    <h4>Integrante 1</h4>
-                    <hr>
 
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Nombre:</label>
-                                <input type="text"
-                                       class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Primer apellido:</label>
-                                <input type="text"
-                                       class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Segundo apellido:</label>
-                                <input type="text"
-                                       class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Fecha de nacimiento:</label>
-                                <input type="text"
-                                       class="form-control datepicker">
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="selIntegrantes">Cantidad de
+                            integrantes:</label>
+                        <select id="selIntegrantes" class="form-control">
+                            <option selected="selected" disabled="disabled"
+                                    value="0"></option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-2 col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label>Nivel de estudios:</label>
-                                <select class="form-control">
-                                    <option>Por egresar</option>
-                                    <option>Licenciatura</option>
-                                    <option>Posgrado</option>
-                                </select>
+                    <div id="integrantesContainer"></div>
+
+                    <div id="integranteTemplate" class="hidden">
+                        <h4 class="numIntegrante"></h4>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group nombreIntegrante">
+                                    <label>Nombre:</label>
+                                    <input type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group priApellido">
+                                    <label>Primer apellido:</label>
+                                    <input type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group segApellido">
+                                    <label>Segundo apellido:</label>
+                                    <input type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group fechaNacimiento">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="text"
+                                           class="form-control datepicker">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-5 col-md-8 col-sm-12">
-                            <div class="form-group">
-                                <label>Carrera o posgrado:</label>
-                                <input type="text"
-                                       class="form-control">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4 col-sm-12">
+                                <div class="form-group nivelEstudios">
+                                    <label>Nivel de estudios:</label>
+                                    <select class="form-control">
+                                        <option>Por egresar</option>
+                                        <option>Licenciatura</option>
+                                        <option>Posgrado</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-8 col-sm-12">
+                                <div class="form-group carrera">
+                                    <label>Carrera o posgrado:</label>
+                                    <input type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-12 col-sm-12">
+                                <div class="form-group universidad">
+                                    <label>Universidad:</label>
+                                    <input type="text"
+                                           class="form-control">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-5 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label>Universidad:</label>
-                                <input type="text"
-                                       class="form-control">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group titulo">
+                                    <label>Título profesional:</label>
+                                    <input type="file">
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Título profesional:</label>
-                                <input type="file">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group constanciaEstudios">
+                                    <label>Constancia de estudios:</label>
+                                    <input type="file">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Constancia de
-                                    estudios:</label>
-                                <input type="file">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group constanciaObligaciones">
+                                    <label>Constancia de obligaciones
+                                        académicas:</label>
+                                    <input type="file">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Constancia de obligaciones
-                                    académicas:</label>
-                                <input type="file">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group ine">
+                                    <label>INE:</label>
+                                    <input type="file">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>INE:</label>
-                                <input type="file">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group curp">
+                                    <label>CURP:</label>
+                                    <input type="file">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>CURP:</label>
-                                <input type="file">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Oficio de protesta de decir
-                                    verdad:</label>
-                                <input type="file">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group oficioProtesta">
+                                    <label>Oficio de protesta de decir
+                                        verdad:</label>
+                                    <input type="file">
+                                </div>
                             </div>
                         </div>
                     </div>

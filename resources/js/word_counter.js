@@ -31,7 +31,7 @@ function refreshRemainingWords(input) {
 
 function deleteExtraWords(input, content, wordLimit) {
     var content = content.replace(/\b(\w+)$/, '');
-    
+
     while (content.split(' ').length > wordLimit) {
         content = content.replace(/(\S+?)$/, '').replace(/ $/g, '');
     }

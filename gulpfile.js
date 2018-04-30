@@ -30,7 +30,8 @@ elixir(function(mix) {
         'resources/js/sb-admin-2.js',
         'resources/js/frontend.js',
         'resources/js/bootstrap-datepicker.js',
-        'resources/js/word_counter.js'
+        'resources/js/word_counter.js',
+        'resources/js/integrantes_generator.js'
     ], 'public/assets/scripts/frontend.js', './');
 });
 
