@@ -155,57 +155,71 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Nombre del proyecto (250
-                            palabras):</label>
-                        <input class="form-control">
+                        <label for="txtNombreProyecto">Nombre del proyecto
+                            (250 palabras):</label>
+                        <input id="txtNombreProyecto" name="txtNombreProyecto"
+                               class="form-control txtWithWordCounter"
+                               data-max_words="250">
                     </div>
 
                     <div class="form-group">
-                        <label>Descripción (250 palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtDescripcion">Descripción
+                            (250 palabras):</label>
+                        <textarea id="txtDescripcion" name="txtDescripcion"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="250"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Impacto social (250
-                            palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtImpactoSocial">Impacto social
+                            (250 palabras):</label>
+                        <textarea id="txtImpactoSocial" name="txtImpactoSocial"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="250"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Análisis de factibilidad del proyecto
-                            (500
-                            palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtFactibilidad">
+                            Análisis de factibilidad del proyecto
+                            (500 palabras):
+                        </label>
+                        <textarea id="txtFactibilidad" name="txtFactibilidad"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="500"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Cronograma de actividades (250
-                            palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtCronograma">Cronograma de actividades
+                            (250 palabras):</label>
+                        <textarea id="txtCronograma" name="txtCronograma"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="250"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Metodología (500 palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtMetodologia">
+                            Metodología (500 palabras):
+                        </label>
+                        <textarea id="txtMetodologia" name="txtMetodologia"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="500"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Resultados esperados (500
-                            palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtResultados">
+                            Resultados esperados (500 palabras):
+                        </label>
+                        <textarea id="txtResultados" name="txtResultados"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="500"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Plan de negocios (500
-                            palabras):</label>
-                        <textarea class="form-control"
-                                  rows="3"></textarea>
+                        <label for="txtPlanNegocios">Plan de negocios
+                            (500 palabras):</label>
+                        <textarea id="txtPlanNegocios" name="txtPlanNegocios"
+                                  class="form-control txtWithWordCounter"
+                                  rows="3" data-max_words="500"></textarea>
                     </div>
                 @endsection
 

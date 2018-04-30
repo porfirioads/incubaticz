@@ -29,7 +29,8 @@ elixir(function(mix) {
         'bower_components/metisMenu/dist/metisMenu.js',
         'resources/js/sb-admin-2.js',
         'resources/js/frontend.js',
-        'resources/js/bootstrap-datepicker.js'
+        'resources/js/bootstrap-datepicker.js',
+        'resources/js/word_counter.js'
     ], 'public/assets/scripts/frontend.js', './');
 });
 
