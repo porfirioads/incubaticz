@@ -30,6 +30,8 @@ class CreateIntegranteTable extends Migration
             $table->string('email');
             $table->date('nacimiento');
             $table->string('nivel_estudio', 45);
+            $table->string('carrera');
+            $table->string('universidad');
             $table->string('titulo_profesional')->nullable();
             $table->string('constancia_estudios')->nullable();
             $table->string('constancia_obligaciones')->nullable();

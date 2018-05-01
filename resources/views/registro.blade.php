@@ -2,18 +2,13 @@
 @section('page_heading', 'Registro')
 
 @section('section')
-    @if (count($errors) > 0)
+    <div id="errorsContainer" class="row hidden">
+        <div class="col-lg-12">
+            <div class="alert alert-danger alert-dismissable">
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-danger alert-dismissable">
-                    @foreach($errors as $error)
-                        <p>{{$error}}</p>
-                    @endforeach
-                </div>
             </div>
         </div>
-    @endif
+    </div>
 
     <div class="row">
         <div class="col-lg-12">
@@ -45,7 +40,7 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group nombreIntegrante">
                                     <label>Nombre:</label>
                                     <input type="text"
@@ -53,7 +48,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group priApellido">
                                     <label>Primer apellido:</label>
                                     <input type="text"
@@ -61,15 +56,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group segApellido">
                                     <label>Segundo apellido:</label>
                                     <input type="text"
                                            class="form-control">
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group email">
+                                    <label>Email:</label>
+                                    <input type="email"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group fechaNacimiento">
                                     <label>Fecha de nacimiento:</label>
                                     <input type="text"
@@ -279,6 +284,7 @@
                 <br/>
                 <br/>
             </form>
+
         </div>
     </div>
 @stop

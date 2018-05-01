@@ -17485,6 +17485,10 @@ $('#selIntegrantes').change(function () {
         segApellido.find('label').attr('for', 'segApellido' + i);
         segApellido.find('input').attr('id', 'segApellido' + i);
         segApellido.find('input').attr('name', 'segApellido' + i);
+        var email = integranteClone.find('.email');
+        email.find('label').attr('for', 'email' + i);
+        email.find('input').attr('id', 'email' + i);
+        email.find('input').attr('name', 'email' + i);
         var fechaNacimiento = integranteClone.find('.fechaNacimiento');
         fechaNacimiento.find('label').attr('for', 'fechaNacimiento' + i);
         fechaNacimiento.find('input').attr('id', 'fechaNacimiento' + i);
@@ -17535,4 +17539,40 @@ $('#selIntegrantes').change(function () {
         });
     }
 });
+var errorsContainer = $('#errorsContainer');
+
+$('form').on('submit', function (e) {
+    $.ajaxSetup({
+        header: $('meta[name="_token"]').attr('content')
+    });
+    e.preventDefault(e);
+    $.ajax({
+        url: '/registro',
+        type: 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log('success', data);
+            errorsContainer.addClass('hidden')
+        },
+        error: function (data) {
+            var alert = errorsContainer.find('.alert');
+            alert.empty();
+
+            alert.append('<ul>');
+
+            data.responseJSON.errors.forEach(function (error, index) {
+                alert.append('<li>' + error + '</li>');
+            });
+
+            alert.append('</ul>');
+
+            errorsContainer.removeClass('hidden');
+
+            console.log('error', data.responseJSON);
+        }
+    });
+});
+
 //# sourceMappingURL=frontend.js.map

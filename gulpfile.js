@@ -31,7 +31,8 @@ elixir(function(mix) {
         'resources/js/frontend.js',
         'resources/js/bootstrap-datepicker.js',
         'resources/js/word_counter.js',
-        'resources/js/integrantes_generator.js'
+        'resources/js/integrantes_generator.js',
+        'resources/js/submit_proyecto_form.js',
     ], 'public/assets/scripts/frontend.js', './');
 });
 

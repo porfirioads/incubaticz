@@ -16,6 +16,8 @@ class Integrante extends Model
         'email',
         'nacimiento',
         'nivel_estudio',
+        'carrera',
+        'universidad',
         'titulo_profesional',
         'constancia_estudios',
         'constancia_obligaciones',
