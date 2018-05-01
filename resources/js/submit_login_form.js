@@ -1,25 +1,26 @@
-var errorsContainer = $('#modalFalloRegistro');
+var errorsContainer = $('#modalFalloLogin');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '/';
 });
 
-$('#formRegistroProyecto').on('submit', function (e) {
+$('#formLogin').on('submit', function (e) {
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
     });
     e.preventDefault(e);
     $.ajax({
-        url: '/registro',
+        url: '/login',
         type: 'POST',
         data: new FormData(this),
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log('success', data);
-            $('#modalExitoRegistro').modal();
+            console.log(data)
+            window.location = '/';
         },
         error: function (data) {
+            console.log(data)
             var modalBody = errorsContainer.find('.modal-body');
             modalBody.empty();
             modalBody.append('<ul>');
@@ -30,9 +31,8 @@ $('#formRegistroProyecto').on('submit', function (e) {
 
             modalBody.append('</ul>');
 
-            $('#modalFalloRegistro').modal();
-
-            console.log('error', data.responseJSON);
+            $('#modalFalloLogin').modal();
         }
     });
 });
+

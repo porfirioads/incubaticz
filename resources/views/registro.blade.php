@@ -52,7 +52,8 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <form role="form" action="{{URL('/registro')}}"
+            <form id="formRegistroProyecto"
+                    role="form" action="{{URL('/registro')}}"
                   enctype="multipart/form-data" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

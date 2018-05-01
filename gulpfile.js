@@ -33,6 +33,7 @@ elixir(function(mix) {
         'resources/js/word_counter.js',
         'resources/js/integrantes_generator.js',
         'resources/js/submit_proyecto_form.js',
+        'resources/js/submit_login_form.js',
     ], 'public/assets/scripts/frontend.js', './');
 });
 
