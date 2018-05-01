@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Integrante;
+use App\IntegranteProyecto;
 use App\Proyecto;
 use Illuminate\Http\Request;
 
@@ -84,6 +85,10 @@ class ProyectoController extends Controller
                 $rules['universidad' . $i] = 'required';
                 $messages['universidad' . $i . '.required'] =
                     'La universidad del integrante ' . $i . ' es requerida';
+                $rules['titulo' . $i] = 'required';
+                $messages['titulo' . $i . '.required'] =
+                    'El título profesional del integrante ' . $i .
+                    ' es requerido';
                 $rules['constanciaEstudios' . $i] = 'required';
                 $messages['constanciaEstudios' . $i . '.required'] =
                     'La constancia de estudios del integrante ' . $i .
@@ -120,10 +125,10 @@ class ProyectoController extends Controller
         }
 
         try {
-            $this->createProyecto($request);
+            $idProyecto = $this->createProyecto($request);
 
             for ($i = 1; $i <= $request['selIntegrantes']; $i++) {
-                $this->createIntegrante($request, $i);
+                $this->createIntegrante($request, $i, $idProyecto);
             }
         } catch (\Exception $e) {
             return $this->jsonResponse(400, ['errors' => var_dump($e)]);
@@ -154,9 +159,12 @@ class ProyectoController extends Controller
         $proyecto->save();
 
         $this->saveFile($anteproyecto, 'solicitudes', $anteproyectoName);
+
+        return $proyecto->id;
     }
 
-    private function createIntegrante(Request $request, $numIntegrante)
+    private function createIntegrante(Request $request, $numIntegrante,
+                                      $idProyecto)
     {
         $integrante = new Integrante();
         $integrante->nombre = $request['nombreIntegrante' . $numIntegrante];
@@ -203,6 +211,13 @@ class ProyectoController extends Controller
         $integrante->protesta_verdad = $oficioProtestaName;
 
         $integrante->save();
+
+        $integranteProyecto = new IntegranteProyecto();
+        $integranteProyecto->proyecto_id = $idProyecto;
+        $integranteProyecto->integrante_id = $integrante->id;
+        $integranteProyecto->save();
+
+        return $integrante->id;
     }
 
     private function saveFile($requestFile, $folder, $newName)

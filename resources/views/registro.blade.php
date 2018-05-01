@@ -2,10 +2,50 @@
 @section('page_heading', 'Registro')
 
 @section('section')
-    <div id="errorsContainer" class="row hidden">
-        <div class="col-lg-12">
-            <div class="alert alert-danger alert-dismissable">
+    <div class="modal fade" id="modalExitoRegistro" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal
+                        title</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    El proyecto fue registrado con éxito
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="modalFalloRegistro" tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-content-danger">
+                <div class="modal-header modal-header-danger">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Error al registrar proyecto
+                    </h5>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">
+                        Aceptar
+                    </button>
+                </div>
             </div>
         </div>
     </div>

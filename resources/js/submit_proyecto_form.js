@@ -1,4 +1,8 @@
-var errorsContainer = $('#errorsContainer');
+var errorsContainer = $('#modalFalloRegistro');
+
+$('#modalExitoRegistro').on('hidden.bs.modal', function () {
+    window.location = '/';
+});
 
 $('form').on('submit', function (e) {
     $.ajaxSetup({
@@ -13,21 +17,20 @@ $('form').on('submit', function (e) {
         contentType: false,
         success: function (data) {
             console.log('success', data);
-            errorsContainer.addClass('hidden')
+            $('#modalExitoRegistro').modal();
         },
         error: function (data) {
-            var alert = errorsContainer.find('.alert');
-            alert.empty();
-
-            alert.append('<ul>');
+            var modalBody = errorsContainer.find('.modal-body');
+            modalBody.empty();
+            modalBody.append('<ul>');
 
             data.responseJSON.errors.forEach(function (error, index) {
-                alert.append('<li>' + error + '</li>');
+                modalBody.append('<li>' + error + '</li>');
             });
 
-            alert.append('</ul>');
+            modalBody.append('</ul>');
 
-            errorsContainer.removeClass('hidden');
+            $('#modalFalloRegistro').modal();
 
             console.log('error', data.responseJSON);
         }
