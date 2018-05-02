@@ -25,16 +25,12 @@ Route::get('/registro', function () {
 
 Route::post('/registro', 'ProyectoController@registrarProyecto');
 
-Route::get('/tables', function () {
-    return View::make('table');
-});
-
-Route::get('/blank', function () {
-    return View::make('blank');
-});
-
 Route::get('/login', 'AdminController@showLoginForm');
 
 Route::post('/login', 'AdminController@login');
 
 Route::get('/logout', 'AdminController@logout');
+
+Route::get('/proyectos', 'ProyectoController@showProyectosPage');
+
+Route::get('/proyectos/{id}', 'ProyectoController@downloadProjectFiles');

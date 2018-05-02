@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Validator;
+use Illuminate\Support\Facades\View;
+use ZipArchive;
 
 class ProyectoController extends Controller
 {
@@ -225,5 +228,72 @@ class ProyectoController extends Controller
         $requestFile->move(
             base_path() . '/public/' . $folder, $newName
         );
+    }
+
+    public function showProyectosPage(Request $request)
+    {
+        $proyectos = Proyecto::all();
+        return View::make('proyectos')->with(['proyectos' => $proyectos]);
+    }
+
+    private function getProjectFileNames($projectId)
+    {
+        $projectFiles = [];
+        $proyecto = Proyecto::find($projectId);
+        array_push($projectFiles, $proyecto->anteproyecto);
+
+        $integrantes = DB::table('integrante as i')
+            ->join('proyecto_has_integrante as pi',
+                'i.id', '=', 'pi.integrante_id')
+            ->where('pi.proyecto_id', '=', $projectId)
+            ->select(['i.titulo_profesional', 'i.constancia_estudios',
+                'i.constancia_obligaciones', 'i.ine', 'i.curp',
+                'i.protesta_verdad'])
+            ->get();
+
+        foreach ($integrantes as $integrante) {
+            array_push($projectFiles, $integrante->titulo_profesional);
+            array_push($projectFiles, $integrante->constancia_estudios);
+            array_push($projectFiles, $integrante->constancia_obligaciones);
+            array_push($projectFiles, $integrante->ine);
+            array_push($projectFiles, $integrante->curp);
+            array_push($projectFiles, $integrante->protesta_verdad);
+        }
+
+        return $projectFiles;
+    }
+
+    public function downloadProjectFiles(Request $request, $projectId)
+    {
+        $dir = base_path() . '/public/solicitudes';
+        $zip = new ZipArchive();
+        $zipFileName = 'Proyecto_' . $projectId . '.zip';
+        $zipFullPath = $dir . '/' . $zipFileName;
+
+        if (file_exists($zipFullPath)) {
+            unlink($zipFullPath);
+        }
+
+        if ($zip->open($zipFullPath, ZipArchive::CREATE) === TRUE) {
+            $projectFiles = $this->getProjectFileNames($projectId);
+
+            foreach ($projectFiles as $projectFile) {
+                $zip->addFile($dir . '/' . $projectFile, $projectFile);
+            }
+
+            $zip->close();
+        }
+
+        $headers = array(
+            'Content-Type' => 'application/octet-stream',
+        );
+
+        if (file_exists($zipFullPath)) {
+            return response()->download($zipFullPath, $zipFileName, $headers);
+        }
+
+        return $this->jsonResponse(400, [
+            'errors' => ['Error al crear el zip']
+        ]);
     }
 }

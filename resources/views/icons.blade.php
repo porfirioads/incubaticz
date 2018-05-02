@@ -403,7 +403,7 @@
 
 				<p>@include('widgets.icon', array('class'=>'underline')) fa-underline
 
-				<p>@include('widgets.icon', array('class'=>'table')) fa-table
+				<p>@include('widgets.icon', array('class'=>'proyectos')) fa-table
 
 				<p>@include('widgets.icon', array('class'=>'magic')) fa-magic
 

@@ -71,11 +71,6 @@
                                     Proyectos</a>
                             </li>
                         @endif
-                        <li {{ (Request::is('*tables') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('tables') }}"><i
-                                        class="fa fa-table fa-fw"></i>
-                                Tables</a>
-                        </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i>
                                 Sample Pages<span class="fa arrow"></span></a>
