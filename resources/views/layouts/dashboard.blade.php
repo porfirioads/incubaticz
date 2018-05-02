@@ -66,18 +66,6 @@
                                     Proyectos</a>
                             </li>
                         @endif
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i>
-                                Sample Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*blank') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('blank') }}">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url ('login') }}">Login Page</a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
