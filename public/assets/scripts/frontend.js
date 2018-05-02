@@ -17539,7 +17539,7 @@ $('#selIntegrantes').change(function () {
         });
     }
 });
-var errorsContainer = $('#modalFalloRegistro');
+var registroErrorsContainer = $('#modalFalloRegistro');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '/';
@@ -17561,7 +17561,7 @@ $('#formRegistroProyecto').on('submit', function (e) {
             $('#modalExitoRegistro').modal();
         },
         error: function (data) {
-            var modalBody = errorsContainer.find('.modal-body');
+            var modalBody = registroErrorsContainer.find('.modal-body');
             modalBody.empty();
             modalBody.append('<ul>');
 
@@ -17571,6 +17571,8 @@ $('#formRegistroProyecto').on('submit', function (e) {
 
             modalBody.append('</ul>');
 
+            console.log(modalBody);
+
             $('#modalFalloRegistro').modal();
 
             console.log('error', data.responseJSON);
@@ -17578,7 +17580,7 @@ $('#formRegistroProyecto').on('submit', function (e) {
     });
 });
 
-var errorsContainer = $('#modalFalloLogin');
+var loginErrorsContainer = $('#modalFalloLogin');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '/';
@@ -17596,12 +17598,12 @@ $('#formLogin').on('submit', function (e) {
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data)
+            console.log(data);
             window.location = '/';
         },
         error: function (data) {
-            console.log(data)
-            var modalBody = errorsContainer.find('.modal-body');
+            console.log(data);
+            var modalBody = loginErrorsContainer.find('.modal-body');
             modalBody.empty();
             modalBody.append('<ul>');
 

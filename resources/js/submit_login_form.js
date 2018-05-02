@@ -1,4 +1,4 @@
-var errorsContainer = $('#modalFalloLogin');
+var loginErrorsContainer = $('#modalFalloLogin');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '/';
@@ -16,12 +16,12 @@ $('#formLogin').on('submit', function (e) {
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data)
+            console.log(data);
             window.location = '/';
         },
         error: function (data) {
-            console.log(data)
-            var modalBody = errorsContainer.find('.modal-body');
+            console.log(data);
+            var modalBody = loginErrorsContainer.find('.modal-body');
             modalBody.empty();
             modalBody.append('<ul>');
 

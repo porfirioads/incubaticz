@@ -1,4 +1,4 @@
-var errorsContainer = $('#modalFalloRegistro');
+var registroErrorsContainer = $('#modalFalloRegistro');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '/';
@@ -20,7 +20,7 @@ $('#formRegistroProyecto').on('submit', function (e) {
             $('#modalExitoRegistro').modal();
         },
         error: function (data) {
-            var modalBody = errorsContainer.find('.modal-body');
+            var modalBody = registroErrorsContainer.find('.modal-body');
             modalBody.empty();
             modalBody.append('<ul>');
 
@@ -29,6 +29,8 @@ $('#formRegistroProyecto').on('submit', function (e) {
             });
 
             modalBody.append('</ul>');
+
+            console.log(modalBody);
 
             $('#modalFalloRegistro').modal();
 
