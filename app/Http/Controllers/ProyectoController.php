@@ -218,6 +218,9 @@ class ProyectoController extends Controller
         $integranteProyecto = new IntegranteProyecto();
         $integranteProyecto->proyecto_id = $idProyecto;
         $integranteProyecto->integrante_id = $integrante->id;
+
+        $integranteProyecto->rol = $numIntegrante == 1 ? 'Encargado' : 'Miembro';
+
         $integranteProyecto->save();
 
         return $integrante->id;
@@ -233,6 +236,16 @@ class ProyectoController extends Controller
     public function showProyectosPage(Request $request)
     {
         $proyectos = Proyecto::all();
+
+        $proyectos = DB::table('proyecto as p')
+            ->join('proyecto_has_integrante as pi', 'p.id', '=',
+                'pi.proyecto_id')
+            ->join('integrante as i', 'i.id', '=', 'pi.integrante_id')
+            ->where('pi.rol', '=', 'Encargado')
+            ->select(['p.titulo', 'i.nombre', 'i.pri_apellido',
+                'i.seg_apellido', 'i.email', 'pi.rol', 'p.id as proyecto_id'])
+            ->get();
+
         return View::make('proyectos')->with(['proyectos' => $proyectos]);
     }
 

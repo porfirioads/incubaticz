@@ -53,7 +53,7 @@
     <div class="row">
         <div class="col-lg-12">
             <form id="formRegistroProyecto"
-                    role="form" action="{{URL('/registro')}}"
+                  role="form" action="{{URL('/registro')}}"
                   enctype="multipart/form-data" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -73,6 +73,11 @@
                             <option value="5">5</option>
                         </select>
                     </div>
+
+                    <p>
+                        <strong>Nota: </strong> El 1er integrante registrado se
+                        asignará como el responsable del proyecto
+                    </p>
 
                     <div id="integrantesContainer"></div>
 
@@ -217,22 +222,6 @@
 
                 @section ('dpanel2_panel_body')
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="selResponsable">Responsable del
-                                    proyecto:</label>
-                                <select id="selResponsable"
-                                        name="selResponsable"
-                                        class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Anteproyecto (20 cuartillas):</label>
