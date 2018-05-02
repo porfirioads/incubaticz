@@ -88,28 +88,44 @@ class ProyectoController extends Controller
                 $rules['universidad' . $i] = 'required';
                 $messages['universidad' . $i . '.required'] =
                     'La universidad del integrante ' . $i . ' es requerida';
-                $rules['titulo' . $i] = 'required';
+                $rules['titulo' . $i] = ['required', 'mimes:pdf'];
                 $messages['titulo' . $i . '.required'] =
                     'El título profesional del integrante ' . $i .
                     ' es requerido';
-                $rules['constanciaEstudios' . $i] = 'required';
+                $messages['titulo' . $i . '.mimes'] =
+                    'El título profesional del integrante ' .
+                    $i . ' debe ser un archivo pdf';
+                $rules['constanciaEstudios' . $i] = ['required', 'mimes:pdf'];
                 $messages['constanciaEstudios' . $i . '.required'] =
                     'La constancia de estudios del integrante ' . $i .
                     ' es requerida';
-                $rules['constanciaObligaciones' . $i] = 'required';
+                $messages['constanciaEstudios' . $i . '.mimes'] =
+                    'La constancia de estudios del integrante ' .
+                    $i . ' debe ser un archivo pdf';
+                $rules['constanciaObligaciones' . $i] = ['required', 'mimes:pdf'];
                 $messages['constanciaObligaciones' . $i . '.required'] =
                     'La constancia de obligaciones del integrante ' . $i .
                     ' es requerida';
-                $rules['ine' . $i] = 'required';
+                $messages['constanciaObligaciones' . $i . '.mimes'] =
+                    'La constancia de obligaciones del integrante ' .
+                    $i . ' debe ser un archivo pdf';
+                $rules['ine' . $i] = ['required', 'mimes:pdf'];
                 $messages['ine' . $i . '.required'] =
                     'La INE del integrante ' . $i . ' es requerida';
-                $rules['curp' . $i] = 'required';
+                $messages['ine' . $i . '.mimes'] =
+                    'La INE del integrante ' . $i . ' debe ser un archivo pdf';
+                $rules['curp' . $i] = ['required', 'mimes:pdf'];
                 $messages['curp' . $i . '.required'] =
                     'La CURP del integrante ' . $i . ' es requerida';
-                $rules['oficioProtesta' . $i] = 'required';
+                $messages['curp' . $i . '.mimes'] =
+                    'La CURP del integrante ' . $i . ' debe ser un archivo pdf';
+                $rules['oficioProtesta' . $i] = ['required', 'mimes:pdf'];
                 $messages['oficioProtesta' . $i . '.required'] =
                     'El oficio bajo protesta de decir verdad del integrante ' .
                     $i . ' es requerido';
+                $messages['oficioProtesta' . $i . '.mimes'] =
+                    'El oficio bajo protesta de decir verdad del integrante ' .
+                    $i . ' debe ser un archivo pdf';
             }
         }
 
