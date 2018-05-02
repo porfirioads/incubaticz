@@ -59,11 +59,6 @@
                                         class="fa fa-sign-in fa-fw"></i>
                                 Registro</a>
                         </li>
-                        <li {{ (Request::is('*convocatoria') ? 'class="active"' : '')}}>
-                            <a href="{{ url ('convocatoria') }}"><i
-                                        class="fa fa-book fa-fw"></i>
-                                Convocatoria</a>
-                        </li>
                         @if (Session::get('adminLogged'))
                             <li {{ (Request::is('*proyectos') ? 'class="active"' :'')}}>
                                 <a href="{{ url ('proyectos') }}"><i
