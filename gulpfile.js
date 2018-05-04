@@ -34,6 +34,7 @@ elixir(function(mix) {
         'resources/js/integrantes_generator.js',
         'resources/js/submit_proyecto_form.js',
         'resources/js/submit_login_form.js',
+        'resources/js/proponentes_excel.js',
     ], 'public/assets/scripts/frontend.js', './');
 });
 

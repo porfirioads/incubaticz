@@ -34,3 +34,5 @@ Route::get('/logout', 'AdminController@logout');
 Route::get('/proyectos', 'ProyectoController@showProyectosPage');
 
 Route::get('/proyectos/{id}', 'ProyectoController@downloadProjectFiles');
+
+Route::get('/proponentes', 'ProyectoController@getProponentesList');

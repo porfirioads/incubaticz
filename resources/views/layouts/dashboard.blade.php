@@ -53,8 +53,7 @@
                                         class="fa fa-book fa-fw"></i>
                                 Convocatoria</a>
                         </li>
-                        <li {{ (Request::is('*registro') ? 'class="active"' :
-                         '') }}>
+                        <li {{ (Request::is('*registro') ? 'class="active"' :'') }}>
                             <a href="{{ url ('registro') }}"><i
                                         class="fa fa-sign-in fa-fw"></i>
                                 Registro</a>
@@ -65,6 +64,14 @@
                                             class="fa fa-list-ul fa-fw"></i>
                                     Proyectos</a>
                             </li>
+                            <li {{ (Request::is('*proponentes') ? 'class="active"' :'')}}>
+                                <a id="btnProponentes" href="#">
+                                    <i class="fa fa-table fa-fw"></i>
+                                    Proponentes
+                                </a>
+                            </li>
+
+                            <a href="#" id="testAnchor"></a>
                         @endif
                     </ul>
                 </div>

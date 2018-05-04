@@ -325,4 +325,17 @@ class ProyectoController extends Controller
             'errors' => ['Error al crear el zip']
         ]);
     }
+
+    public function getProponentesList(Request $request)
+    {
+        $proponentes = DB::table('proyecto as p')
+            ->join('proyecto_has_integrante as pi', 'p.id', '=', 'pi.proyecto_id')
+            ->join('integrante as i', 'i.id', '=', 'pi.integrante_id')
+            ->select(['i.id as integrante_id', 'i.nombre', 'i.pri_apellido',
+                'i.seg_apellido', 'i.email', 'i.nacimiento', 'i.nivel_estudio',
+                'i.carrera', 'i.universidad', 'p.titulo as proyecto'])
+            ->get();
+
+        return $this->jsonResponse(200, $proponentes);
+    }
 }
