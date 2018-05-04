@@ -8,7 +8,7 @@
                 <thead>
                 <tr>
                     <th>Nombre del proyecto</th>
-                    <th>Encargado</th>
+                    <th>Responsable del proyecto</th>
                     <th>Documentos</th>
                 </tr>
                 </thead>
