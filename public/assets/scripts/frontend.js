@@ -17489,12 +17489,11 @@ $('#selIntegrantes').change(function () {
     }
 });
 var registroErrorsContainer = $('#modalFalloRegistro');
+var formData = undefined;
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
     window.location = '../';
 });
-
-var formData = undefined;
 
 $('#formRegistroProyecto').on('submit', function (e) {
     e.preventDefault(e);
@@ -17599,16 +17598,18 @@ function sendRegistroProyectoHttpRequest(formData) {
             console.log('success', data);
             var formsIntegrantes = $('form.formIntegranteProyecto');
             formsIntegrantes.find('.proyectoId').val(data.proyecto_id);
-            var integranteIndex = 1;
-            console.log('hay ' + formsIntegrantes.length + ' forms de' +
-                ' integrantes')
 
-            formsIntegrantes.each(function (index) {
-                formData = new FormData(this);
-                var lastIntegrante = integranteIndex == formsIntegrantes.length;
-                sendRegistroIntegranteHttpRequest(formData, data.proyecto_id, lastIntegrante);
-                integranteIndex++;
-            });
+            console.log('hay ' + formsIntegrantes.length + ' forms de' +
+                ' integrantes');
+
+            sendRegistroIntegranteForm(formsIntegrantes, 0, data.proyecto_id);
+
+            // formsIntegrantes.each(function (index) {
+            //     formData = new FormData(this);
+            //     var lastIntegrante = integranteIndex == formsIntegrantes.length;
+            //     sendRegistroIntegranteHttpRequest(formData, data.proyecto_id, lastIntegrante);
+            //     integranteIndex++;
+            // });
         },
         error: function (data) {
             showRequestErrors(data.responseJSON, 0);
@@ -17616,7 +17617,27 @@ function sendRegistroProyectoHttpRequest(formData) {
     });
 }
 
-function sendRegistroIntegranteHttpRequest(formData, idProyecto, last) {
+function sendRegistroIntegranteForm(forms, currentIndex, idProyecto) {
+    formData = new FormData(forms[currentIndex]);
+
+    if (currentIndex < forms.length) {
+        sendRegistroIntegranteHttpRequest(formData,
+            function success(data) {
+                console.log('Integrante form ' + (1 + currentIndex) + ' success');
+                console.log(data);
+                sendRegistroIntegranteForm(forms, currentIndex + 1, idProyecto);
+            },
+            function error(error) {
+                console.log('Integrante form ' + (1 + currentIndex) + ' error');
+                console.log(error);
+                showRequestErrors(error.responseJSON, idProyecto);
+            });
+    } else {
+        $('#modalExitoRegistro').modal();
+    }
+}
+
+function sendRegistroIntegranteHttpRequest(formData, successCallback, errorCallback) {
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
     });
@@ -17626,15 +17647,8 @@ function sendRegistroIntegranteHttpRequest(formData, idProyecto, last) {
         data: formData,
         processData: false,
         contentType: false,
-        success: function (data) {
-            console.log(data);
-            if(last) {
-                $('#modalExitoRegistro').modal();
-            }
-        },
-        error: function (data) {
-            showRequestErrors(data.responseJSON, idProyecto);
-        }
+        success: successCallback,
+        error: errorCallback
     });
 }
 
@@ -17653,7 +17667,7 @@ function showRequestErrors(errorsArray, idProyecto) {
 
     $('#modalFalloRegistro').modal();
 
-    if(idProyecto > 0) {
+    if (idProyecto > 0) {
         deleteProject(idProyecto)
     }
 
@@ -17668,10 +17682,10 @@ function deleteProject(idProyecto) {
         type: 'POST',
         url: 'delete_project',
         data: {proyecto_id: idProyecto},
-        success: function(data) {
+        success: function (data) {
             console.log(data)
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error.responseJSON)
         }
     });
