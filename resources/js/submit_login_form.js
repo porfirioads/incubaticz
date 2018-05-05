@@ -10,7 +10,7 @@ $('#formLogin').on('submit', function (e) {
     });
     e.preventDefault(e);
     $.ajax({
-        url: '/login',
+        url: 'login',
         type: 'POST',
         data: new FormData(this),
         processData: false,

@@ -17590,7 +17590,7 @@ function sendRegistroProyectoHttpRequest(formData) {
         header: $('meta[name="_token"]').attr('content')
     });
     $.ajax({
-        url: '/registro',
+        url: 'registro',
         type: 'POST',
         data: formData,
         processData: false,
@@ -17621,7 +17621,7 @@ function sendRegistroIntegranteHttpRequest(formData, idProyecto, last) {
         header: $('meta[name="_token"]').attr('content')
     });
     $.ajax({
-        url: '/registro_integrante',
+        url: 'registro_integrante',
         type: 'POST',
         data: formData,
         processData: false,
@@ -17666,7 +17666,7 @@ function deleteProject(idProyecto) {
     });
     $.ajax({
         type: 'POST',
-        url: '/delete_project',
+        url: 'delete_project',
         data: {proyecto_id: idProyecto},
         success: function(data) {
             console.log(data)
@@ -17695,7 +17695,7 @@ $('#formLogin').on('submit', function (e) {
     });
     e.preventDefault(e);
     $.ajax({
-        url: '/login',
+        url: 'login',
         type: 'POST',
         data: new FormData(this),
         processData: false,
