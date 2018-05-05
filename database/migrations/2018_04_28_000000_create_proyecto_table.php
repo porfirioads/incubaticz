@@ -26,6 +26,7 @@ class CreateProyectoTable extends Migration
             $table->increments('id');
             $table->string('titulo');
             $table->string('anteproyecto')->nullable();
+            $table->string('abstract')->nullable();
             $table->string('descripcion', 250);
             $table->string('impacto', 250);
             $table->string('factibilidad');

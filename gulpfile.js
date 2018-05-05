@@ -35,6 +35,9 @@ elixir(function(mix) {
         'resources/js/submit_proyecto_form.js',
         'resources/js/submit_login_form.js',
         'resources/js/proponentes_excel.js',
+        'resources/js/pdfmake.min.js',
+        'resources/js/vfs_fonts.js',
+        'resources/js/abstract_proyecto_pdf.js',
     ], 'public/assets/scripts/frontend.js', './');
 });
 

@@ -27,6 +27,7 @@ class ProyectoController extends Controller
     {
         $rules = [
             'anteproyecto' => ['required', 'mimes:pdf'],
+            'abstract' => ['required', 'mimes:pdf'],
             'txtNombreProyecto' => ['required', 'unique:proyecto,titulo'],
             'txtDescripcion' => ['required'],
             'txtImpactoSocial' => ['required'],
@@ -41,6 +42,8 @@ class ProyectoController extends Controller
         $messages = [
             'anteproyecto.required' => 'El anteproyecto es requerido',
             'anteproyecto.mimes' => 'El anteproyecto debe ser un archivo pdf',
+            'abstract.required' => 'El abstract es requerido',
+            'abstract.mimes' => 'El abstract debe ser un archivo pdf',
             'selIntegrantes.required' => 'El número de integrantes del proyecto es requerido',
             'txtNombreProyecto.required' => 'El nombre del proyecto es requerido',
             'txtNombreProyecto.unique' => 'El título del proyecto ya existe',
@@ -172,13 +175,15 @@ class ProyectoController extends Controller
 
         $anteproyecto = $request->file('anteproyecto');
         $anteproyectoName = 'anteproyecto_' . $proyecto->id . '.pdf';
-
+        $this->saveFile($anteproyecto, 'solicitudes', $anteproyectoName);
         $proyecto->anteproyecto = $anteproyectoName;
 
+        $abstract = $request->file('abstract');
+        $abstractName = 'abstract_' . $proyecto->id . '.pdf';
+        $this->saveFile($abstract, 'solicitudes', $abstractName);
+        $proyecto->abstract = $abstractName;
+
         $proyecto->save();
-
-        $this->saveFile($anteproyecto, 'solicitudes', $anteproyectoName);
-
         return $proyecto->id;
     }
 
