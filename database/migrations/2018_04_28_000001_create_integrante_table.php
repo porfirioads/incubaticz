@@ -38,6 +38,8 @@ class CreateIntegranteTable extends Migration
             $table->string('ine')->nullable();
             $table->string('curp')->nullable();
             $table->string('protesta_verdad')->nullable();
+            $table->string('rfc')->nullable();
+            $table->string('carta_sat')->nullable();
 
             $table->unique(["email"], 'email_UNIQUE');
         });

@@ -17465,6 +17465,8 @@ function deleteExtraWords(input, content, wordLimit) {
 $('#selIntegrantes').change(function () {
     console.log('Seleccionó ' + $(this).val());
 
+    $('#numIntegrantes').val($(this).val());
+
     var integrantesContainer = $('#integrantesContainer');
     var integranteTemplate = $('#integranteTemplate');
     var numIntegrantes = $(this).val();
@@ -17472,64 +17474,11 @@ $('#selIntegrantes').change(function () {
 
     for (var i = 1; i <= numIntegrantes; i++) {
         var integranteClone = integranteTemplate.clone();
-        integranteClone.find('.numIntegrante').html('Integrante ' + i);
-        var nombreIntegrante = integranteClone.find('.nombreIntegrante');
-        nombreIntegrante.find('label').attr('for', 'nombreIntegrante' + i);
-        nombreIntegrante.find('input').attr('id', 'nombreIntegrante' + i);
-        nombreIntegrante.find('input').attr('name', 'nombreIntegrante' + i);
-        var priApellido = integranteClone.find('.priApellido');
-        priApellido.find('label').attr('for', 'priApellido' + i);
-        priApellido.find('input').attr('id', 'priApellido' + i);
-        priApellido.find('input').attr('name', 'priApellido' + i);
-        var segApellido = integranteClone.find('.segApellido');
-        segApellido.find('label').attr('for', 'segApellido' + i);
-        segApellido.find('input').attr('id', 'segApellido' + i);
-        segApellido.find('input').attr('name', 'segApellido' + i);
-        var email = integranteClone.find('.email');
-        email.find('label').attr('for', 'email' + i);
-        email.find('input').attr('id', 'email' + i);
-        email.find('input').attr('name', 'email' + i);
-        var fechaNacimiento = integranteClone.find('.fechaNacimiento');
-        fechaNacimiento.find('label').attr('for', 'fechaNacimiento' + i);
-        fechaNacimiento.find('input').attr('id', 'fechaNacimiento' + i);
-        fechaNacimiento.find('input').attr('name', 'fechaNacimiento' + i);
-        var nivelEstudios = integranteClone.find('.nivelEstudios');
-        nivelEstudios.find('label').attr('for', 'nivelEstudios' + i);
-        nivelEstudios.find('select').attr('id', 'nivelEstudios' + i);
-        nivelEstudios.find('select').attr('name', 'nivelEstudios' + i);
-        var carrera = integranteClone.find('.carrera');
-        carrera.find('label').attr('for', 'carrera' + i);
-        carrera.find('input').attr('id', 'carrera' + i);
-        carrera.find('input').attr('name', 'carrera' + i);
-        var universidad = integranteClone.find('.universidad');
-        universidad.find('label').attr('for', 'universidad' + i);
-        universidad.find('input').attr('id', 'universidad' + i);
-        universidad.find('input').attr('name', 'universidad' + i);
-        var titulo = integranteClone.find('.titulo');
-        titulo.find('label').attr('for', 'titulo' + i);
-        titulo.find('input').attr('id', 'titulo' + i);
-        titulo.find('input').attr('name', 'titulo' + i);
-        var constanciaEstudios = integranteClone.find('.constanciaEstudios');
-        constanciaEstudios.find('label').attr('for', 'constanciaEstudios' + i);
-        constanciaEstudios.find('input').attr('id', 'constanciaEstudios' + i);
-        constanciaEstudios.find('input').attr('name', 'constanciaEstudios' + i);
-        var constanciaObligaciones = integranteClone.find('.constanciaObligaciones');
-        constanciaObligaciones.find('label').attr('for', 'constanciaObligaciones' + i);
-        constanciaObligaciones.find('input').attr('id', 'constanciaObligaciones' + i);
-        constanciaObligaciones.find('input').attr('name', 'constanciaObligaciones' + i);
-        var ine = integranteClone.find('.ine');
-        ine.find('label').attr('for', 'ine' + i);
-        ine.find('input').attr('id', 'ine' + i);
-        ine.find('input').attr('name', 'ine' + i);
-        var curp = integranteClone.find('.curp');
-        curp.find('label').attr('for', 'curp' + i);
-        curp.find('input').attr('id', 'curp' + i);
-        curp.find('input').attr('name', 'curp' + i);
-        var oficioProtesta = integranteClone.find('.oficioProtesta');
-        oficioProtesta.find('label').attr('for', 'oficioProtesta' + i);
-        oficioProtesta.find('input').attr('id', 'oficioProtesta' + i);
-        oficioProtesta.find('input').attr('name', 'oficioProtesta' + i);
+        integranteClone.find('.integranteLabel').html('Integrante ' + i);
+        integranteClone.find('.numIntegrante').attr('value', i);
 
+        integranteClone.find('form').attr('id', 'formIntegrante' + i);
+        integranteClone.find('form').addClass('formIntegranteProyecto');
         integrantesContainer.append(integranteClone.html());
 
         $('.datepicker').datepicker({
@@ -17613,7 +17562,7 @@ function generateProjectPdf() {
         }
     };
 
-    var pdf = pdfMake.createPdf(docDefinition).getBase64(prepareAndUploadPdf);
+    pdfMake.createPdf(docDefinition).getBase64(prepareAndUploadPdf);
 }
 
 function createBlobFile(base64) {
@@ -17627,76 +17576,16 @@ function createBlobFile(base64) {
 
     var byteArray = new Uint8Array(byteNumbers);
 
-    var blob = new Blob([byteArray], {type: 'application/pdf'});
-
-    return blob;
+    return new Blob([byteArray], {type: 'application/pdf'});
 }
 
 function prepareAndUploadPdf(base64) {
     var blob = createBlobFile(base64);
     formData.append('abstract', blob);
-    sendFormHttpRequest(formData);
+    sendRegistroProyectoHttpRequest(formData);
 }
 
-// function generateProjectAbstractPdf() {
-//     var doc = new jsPDF();
-//
-//     var specialElementHandlers = {
-//         '#editor': function (element, renderer) {
-//             return true;
-//         }
-//     };
-//
-//     var abstractHtml = '<h1>$titulo</h1>' +
-//         '<h2>Descripción</h2>' +
-//         '<p>$descripcion</p>' +
-//         '<h2>Impacto Social</h2>' +
-//         '<p>$impactoSocial</p>' +
-//         '<h2>Análisis de Factibilidad del Proyecto</h2>' +
-//         '<p>$factibilidad</p>' +
-//         '<h2>Cronograma de Actividades</h2>' +
-//         '<p>$cronograma</p>' +
-//         '<h2>Metodología</h2>' +
-//         '<p>$metodologia</p>' +
-//         '<h2>Resultados Esperados</h2>' +
-//         '<p>$resultados</p>' +
-//         '<h2>Plan de Negocios</h2>' +
-//         '<p>$plan</p>'+
-//         '<p>&aacute;</p>'+
-//         '<p>\u00E1</p>'+
-//         '<p>&#xE1;</p>';
-//
-//     var titulo = $('#txtNombreProyecto').val();
-//     var descripcion = $('#txtDescripcion').val();
-//     var impactoSocial = $('#txtImpactoSocial').val();
-//     var factibilidad = $('#txtFactibilidad').val();
-//     var cronograma = $('#txtCronograma').val();
-//     var metodologia = $('#txtMetodologia').val();
-//     var resultados = $('#txtResultados').val();
-//     var plan = $('#txtPlanNegocios').val();
-//
-//     abstractHtml = abstractHtml.replace('$titulo', titulo);
-//     abstractHtml = abstractHtml.replace('$descripcion', descripcion);
-//     abstractHtml = abstractHtml.replace('$impactoSocial', impactoSocial);
-//     abstractHtml = abstractHtml.replace('$factibilidad', factibilidad);
-//     abstractHtml = abstractHtml.replace('$cronograma', cronograma);
-//     abstractHtml = abstractHtml.replace('$metodologia', metodologia);
-//     abstractHtml = abstractHtml.replace('$resultados', resultados);
-//     abstractHtml = abstractHtml.replace('$plan', plan);
-//
-//     console.log(abstractHtml);
-//
-//     doc.fromHTML(abstractHtml, 15, 15, {
-//         'width': 170,
-//         'elementHandlers': specialElementHandlers
-//     });
-//
-//     return doc;
-// }
-
-//////////////
-
-function sendFormHttpRequest(formData) {
+function sendRegistroProyectoHttpRequest(formData) {
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
     });
@@ -17708,27 +17597,92 @@ function sendFormHttpRequest(formData) {
         contentType: false,
         success: function (data) {
             console.log('success', data);
-            $('#modalExitoRegistro').modal();
+            var formsIntegrantes = $('form.formIntegranteProyecto');
+            formsIntegrantes.find('.proyectoId').val(data.proyecto_id);
+            var integranteIndex = 1;
+            console.log('hay ' + formsIntegrantes.length + ' forms de' +
+                ' integrantes')
+
+            formsIntegrantes.each(function (index) {
+                formData = new FormData(this);
+                var lastIntegrante = integranteIndex == formsIntegrantes.length;
+                sendRegistroIntegranteHttpRequest(formData, data.proyecto_id, lastIntegrante);
+                integranteIndex++;
+            });
         },
         error: function (data) {
-            var modalBody = registroErrorsContainer.find('.modal-body');
-            modalBody.empty();
-            modalBody.append('<ul>');
-
-            data.responseJSON.errors.forEach(function (error, index) {
-                modalBody.append('<li>' + error + '</li>');
-            });
-
-            modalBody.append('</ul>');
-
-            console.log(modalBody);
-
-            $('#modalFalloRegistro').modal();
-
-            console.log('error', data.responseJSON);
+            showRequestErrors(data.responseJSON, 0);
         }
     });
 }
+
+function sendRegistroIntegranteHttpRequest(formData, idProyecto, last) {
+    $.ajaxSetup({
+        header: $('meta[name="_token"]').attr('content')
+    });
+    $.ajax({
+        url: '/registro_integrante',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+            if(last) {
+                $('#modalExitoRegistro').modal();
+            }
+        },
+        error: function (data) {
+            showRequestErrors(data.responseJSON, idProyecto);
+        }
+    });
+}
+
+function showRequestErrors(errorsArray, idProyecto) {
+    var modalBody = registroErrorsContainer.find('.modal-body');
+
+    modalBody.append('<ul>');
+
+    errorsArray.errors.forEach(function (error, index) {
+        modalBody.append('<li>' + error + '</li>');
+    });
+
+    modalBody.append('</ul>');
+
+    console.log(modalBody);
+
+    $('#modalFalloRegistro').modal();
+
+    if(idProyecto > 0) {
+        deleteProject(idProyecto)
+    }
+
+    console.log('error', errorsArray);
+}
+
+function deleteProject(idProyecto) {
+    $.ajaxSetup({
+        header: $('meta[name="_token"]').attr('content')
+    });
+    $.ajax({
+        type: 'POST',
+        url: '/delete_project',
+        data: {proyecto_id: idProyecto},
+        success: function(data) {
+            console.log(data)
+        },
+        error: function(error) {
+            console.log(error.responseJSON)
+        }
+    });
+}
+
+$('#modalFalloRegistro').on('hidden.bs.modal', function () {
+    var modalBody = registroErrorsContainer.find('.modal-body');
+    modalBody.empty();
+});
+
+
 var loginErrorsContainer = $('#modalFalloLogin');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {

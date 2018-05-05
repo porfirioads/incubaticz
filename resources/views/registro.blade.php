@@ -52,36 +52,239 @@
 
     <div class="row">
         <div class="col-lg-12">
+        <!--
             <form id="formRegistroProyecto"
                   role="form" action="{{URL('/registro')}}"
                   enctype="multipart/form-data" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                -->
 
-                @section ('dpanel_panel_title', 'Datos de los integrantes')
+            @section ('dpanel_panel_title', 'Datos de los integrantes')
 
-                @section ('dpanel_panel_body')
+            @section ('dpanel_panel_body')
 
-                    <div class="form-group">
-                        <label for="selIntegrantes">Cantidad de
-                            integrantes:</label>
-                        <select id="selIntegrantes" name="selIntegrantes"
-                                class="form-control">
-                            <option selected="selected" disabled="disabled"
-                                    value="0"></option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="selIntegrantes">Cantidad de
+                        integrantes:</label>
+                    <select id="selIntegrantes" name="selIntegrantes"
+                            class="form-control">
+                        <option selected="selected" disabled="disabled"
+                                value="0"></option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
 
-                    <p>
-                        <strong>Nota: </strong> El 1er integrante registrado se
-                        asignará como el responsable del proyecto
-                    </p>
+                <p>
+                    <strong>Nota: </strong> El 1er integrante registrado se
+                    asignará como el responsable del proyecto
+                </p>
 
-                    <div id="integrantesContainer"></div>
+                <div id="integrantesContainer"></div>
 
-                    <div id="integranteTemplate" class="hidden">
+                <div id="integranteTemplate" class="hidden">
+                    <form
+                          role="form" action="{{URL('/registro_integrante')}}"
+                          enctype="multipart/form-data" method="POST">
+
+                        <input type="hidden" name="_token"
+                               value="{{ csrf_token() }}">
+
+                        <input type="hidden" name="numIntegrante"
+                               class="numIntegrante">
+
+                        <input type="hidden" name="proyectoId"
+                               class="proyectoId">
+
+                        <h4 class="integranteLabel"></h4>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Nombre:</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="nombreIntegrante"
+                                           name="nombreIntegrante">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Primer apellido:</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="priApellido" name="priApellido">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Segundo apellido:</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="segApellido" name="segApellido">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Email:</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           id="email" name="email">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="text"
+                                           class="form-control datepicker"
+                                           id="fechaNacimiento"
+                                           name="fechaNacimiento">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Nivel de estudios:</label>
+                                    <select class="form-control"
+                                            id="nivelEstudios"
+                                            name="nivelEstudios">
+                                        <option selected="selected"
+                                                disabled="disabled"
+                                                value="0"></option>
+                                        <option value="Por egresar">
+                                            Por egresar
+                                        </option>
+                                        <option value="Licenciatura">
+                                            Licenciatura
+                                        </option>
+                                        <option value="Posgrado">
+                                            Posgrado
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label>Carrera o posgrado:</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="carrera" name="carrera">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Universidad:</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="universidad" name="universidad">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Título profesional:</label>
+                                    <input type="file"
+                                           id="titulo" name="titulo">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Constancia de estudios:</label>
+                                    <input type="file"
+                                           id="constanciaEstudios"
+                                           name="constanciaEstudios">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Constancia de obligaciones
+                                        académicas:</label>
+                                    <input type="file"
+                                           id="constanciaObligaciones"
+                                           name="constanciaObligaciones">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>INE:</label>
+                                    <input type="file"
+                                           id="ine" name="ine">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>CURP:</label>
+                                    <input type="file"
+                                           id="curp" name="curp">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Oficio de protesta de decir
+                                        verdad:</label>
+                                    <input type="file"
+                                           id="oficioProtesta"
+                                           name="oficioProtesta">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>RFC:</label>
+                                    <input type="file"
+                                           id="rfc" name="rfc">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>
+                                        Carta de opinión positiva del SAT:
+                                    </label>
+                                    <input type="file"
+                                           id="cartaSat" name="cartaSat">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="hidden"></button>
+                    </form>
+                </div>
+
+            <!--
+                <div id="integranteTemplate" class="hidden">
+                    <form class="formIntegranteProyecto"
+                          role="form" action="{{URL('/registro_integrante')}}"
+                          enctype="multipart/form-data" method="POST">
+
+                        <input type="hidden" name="_token"
+                               value="{{ csrf_token() }}">
+
+                        <input type="hidden" id="numIntegrante"
+                               name="numIntegrante">
+
+                        <input type="hidden" id="proyectoId"
+                               name="proyectoId">
+
                         <h4 class="numIntegrante"></h4>
                         <hr>
 
@@ -211,16 +414,43 @@
                                     <input type="file">
                                 </div>
                             </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group rfc">
+                                    <label>RFC:</label>
+                                    <input type="file">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group cartaSat">
+                                    <label>
+                                        Carta de opinión positiva del SAT:
+                                    </label>
+                                    <input type="file">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endsection
+                    </form>
+                </div>
+                -->
+            @endsection
 
-                @include ('widgets.panel', array('class'=>'default', 'header'=>true,
-                'as'=>'dpanel'))
+            @include ('widgets.panel', array('class'=>'default', 'header'=>true,
+            'as'=>'dpanel'))
 
-                @section ('dpanel2_panel_title', 'Datos del proyecto')
+            @section ('dpanel2_panel_title', 'Datos del proyecto')
 
-                @section ('dpanel2_panel_body')
+            @section ('dpanel2_panel_body')
+                <form id="formRegistroProyecto"
+                      role="form" action="{{URL('/registro')}}"
+                      enctype="multipart/form-data" method="POST">
+                    <input type="hidden" name="_token"
+                           value="{{ csrf_token() }}">
+
+                    <input type="hidden" id="numIntegrantes"
+                           name="numIntegrantes">
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -299,21 +529,19 @@
                                   class="form-control txtWithWordCounter"
                                   rows="3" data-max_words="500"></textarea>
                     </div>
-                @endsection
 
-                @include ('widgets.panel', array('class'=>'default', 'header'=>true,
-                'as'=>'dpanel2'))
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </form>
+            @endsection
 
-                <button type="submit" class="btn btn-primary">
-                    Guardar
-                </button>
-                <button type="reset" class="btn btn-danger">
-                    Cancelar
-                </button>
+            @include ('widgets.panel', array('class'=>'default', 'header'=>true,
+            'as'=>'dpanel2'))
 
-                <br/>
-                <br/>
-            </form>
+            <br/>
+            <br/>
+            <!-- </form> -->
 
         </div>
     </div>

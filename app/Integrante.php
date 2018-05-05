@@ -23,6 +23,8 @@ class Integrante extends Model
         'constancia_obligaciones',
         'ine',
         'curp',
-        'protesta_verdad'
+        'protesta_verdad',
+        'rfc',
+        'carta_sat'
     ];
 }

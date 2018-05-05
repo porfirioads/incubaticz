@@ -23,7 +23,28 @@ class ProyectoController extends Controller
         return $jsonResponse;
     }
 
-    private function createNewProjectValidator(Request $request)
+    public function registerProject(Request $request)
+    {
+        $validator = $this->createProjectValidator($request);
+
+        if ($validator->fails()) {
+            return $this->jsonResponse(400, [
+                'errors' => $validator->errors()->all(),
+                'request' => $request->all()]);
+        }
+
+        try {
+            $idProyecto = $this->saveProyectoInstance($request);
+
+            return $this->jsonResponse(200, [
+                'proyecto_id' => $idProyecto
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse(400, ['errors' => var_dump($e)]);
+        }
+    }
+
+    private function createProjectValidator(Request $request)
     {
         $rules = [
             'anteproyecto' => ['required', 'mimes:pdf'],
@@ -36,7 +57,7 @@ class ProyectoController extends Controller
             'txtMetodologia' => ['required'],
             'txtResultados' => ['required'],
             'txtPlanNegocios' => ['required'],
-            'selIntegrantes' => ['required']
+            'numIntegrantes' => ['required']
         ];
 
         $messages = [
@@ -44,7 +65,7 @@ class ProyectoController extends Controller
             'anteproyecto.mimes' => 'El anteproyecto debe ser un archivo pdf',
             'abstract.required' => 'El abstract es requerido',
             'abstract.mimes' => 'El abstract debe ser un archivo pdf',
-            'selIntegrantes.required' => 'El número de integrantes del proyecto es requerido',
+            'numIntegrantes.required' => 'El número de integrantes del proyecto es requerido',
             'txtNombreProyecto.required' => 'El nombre del proyecto es requerido',
             'txtNombreProyecto.unique' => 'El título del proyecto ya existe',
             'txtDescripcion.required' => 'La descripción del proyecto es requerida',
@@ -56,110 +77,12 @@ class ProyectoController extends Controller
             'txtPlanNegocios.required' => 'El plan de negocios del proyecto es requerido',
         ];
 
-        $numIntegrantes = $request['selIntegrantes'];
-
-        if ($numIntegrantes) {
-            for ($i = 1; $i <= $numIntegrantes; $i++) {
-                $rules['nombreIntegrante' . $i] = 'required';
-                $messages['nombreIntegrante' . $i . '.required'] =
-                    'El nombre del integrante ' . $i . ' es requerido';
-                $rules['priApellido' . $i] = 'required';
-                $messages['priApellido' . $i . '.required'] =
-                    'El primer apellido del integrante ' . $i . ' es requerido';
-                $rules['fechaNacimiento' . $i] = 'required';
-                $messages['fechaNacimiento' . $i . '.required'] =
-                    'La fecha de nacimiento del integrante ' . $i .
-                    ' es requerida';
-                $rules['nivelEstudios' . $i] = 'required';
-                $messages['nivelEstudios' . $i . '.required'] =
-                    'El nivel de estudios del integrante ' . $i .
-                    ' es requerido';
-                $rules['email' . $i] = ['required', 'email', 'unique:integrante,email'];
-                $messages['email' . $i . '.required'] =
-                    'El email del integrante ' . $i . ' es requerido';
-                $messages['email' . $i . '.email'] =
-                    'El email del integrante ' . $i .
-                    ' tiene un formato incorrecto';
-                $messages['email' . $i . '.unique'] =
-                    'El email del integrante ' . $i . ' ya está siendo usado';
-                $rules['carrera' . $i] = 'required';
-                $messages['carrera' . $i . '.required'] =
-                    'La carrera del integrante ' . $i . ' es requerida';
-                $rules['carrera' . $i] = 'required';
-                $messages['carrera' . $i . '.required'] =
-                    'La carrera del integrante ' . $i . ' es requerida';
-                $rules['universidad' . $i] = 'required';
-                $messages['universidad' . $i . '.required'] =
-                    'La universidad del integrante ' . $i . ' es requerida';
-                $rules['titulo' . $i] = ['required', 'mimes:pdf'];
-                $messages['titulo' . $i . '.required'] =
-                    'El título profesional del integrante ' . $i .
-                    ' es requerido';
-                $messages['titulo' . $i . '.mimes'] =
-                    'El título profesional del integrante ' .
-                    $i . ' debe ser un archivo pdf';
-                $rules['constanciaEstudios' . $i] = ['required', 'mimes:pdf'];
-                $messages['constanciaEstudios' . $i . '.required'] =
-                    'La constancia de estudios del integrante ' . $i .
-                    ' es requerida';
-                $messages['constanciaEstudios' . $i . '.mimes'] =
-                    'La constancia de estudios del integrante ' .
-                    $i . ' debe ser un archivo pdf';
-                $rules['constanciaObligaciones' . $i] = ['required', 'mimes:pdf'];
-                $messages['constanciaObligaciones' . $i . '.required'] =
-                    'La constancia de obligaciones del integrante ' . $i .
-                    ' es requerida';
-                $messages['constanciaObligaciones' . $i . '.mimes'] =
-                    'La constancia de obligaciones del integrante ' .
-                    $i . ' debe ser un archivo pdf';
-                $rules['ine' . $i] = ['required', 'mimes:pdf'];
-                $messages['ine' . $i . '.required'] =
-                    'La INE del integrante ' . $i . ' es requerida';
-                $messages['ine' . $i . '.mimes'] =
-                    'La INE del integrante ' . $i . ' debe ser un archivo pdf';
-                $rules['curp' . $i] = ['required', 'mimes:pdf'];
-                $messages['curp' . $i . '.required'] =
-                    'La CURP del integrante ' . $i . ' es requerida';
-                $messages['curp' . $i . '.mimes'] =
-                    'La CURP del integrante ' . $i . ' debe ser un archivo pdf';
-                $rules['oficioProtesta' . $i] = ['required', 'mimes:pdf'];
-                $messages['oficioProtesta' . $i . '.required'] =
-                    'El oficio bajo protesta de decir verdad del integrante ' .
-                    $i . ' es requerido';
-                $messages['oficioProtesta' . $i . '.mimes'] =
-                    'El oficio bajo protesta de decir verdad del integrante ' .
-                    $i . ' debe ser un archivo pdf';
-            }
-        }
-
         $validator = Validator::make($request->all(), $rules, $messages);
 
         return $validator;
     }
 
-    public function registrarProyecto(Request $request)
-    {
-        $validator = $this->createNewProjectValidator($request);
-
-        if ($validator->fails()) {
-            return $this->jsonResponse(400, ['errors' => $validator->errors()
-                ->all()]);
-        }
-
-        try {
-            $idProyecto = $this->createProyecto($request);
-
-            for ($i = 1; $i <= $request['selIntegrantes']; $i++) {
-                $this->createIntegrante($request, $i, $idProyecto);
-            }
-        } catch (\Exception $e) {
-            return $this->jsonResponse(400, ['errors' => var_dump($e)]);
-        }
-
-        return $this->jsonResponse(200, $request->all());
-    }
-
-    private function createProyecto(Request $request)
+    private function saveProyectoInstance(Request $request)
     {
         $proyecto = new Proyecto();
         $proyecto->titulo = $request['txtNombreProyecto'];
@@ -181,43 +104,189 @@ class ProyectoController extends Controller
         $abstract = $request->file('abstract');
         $abstractName = 'abstract_' . $proyecto->id . '.pdf';
         $this->saveFile($abstract, 'solicitudes', $abstractName);
-        $proyecto->abstract = $abstractName;
 
+        $proyecto->abstract = $abstractName;
         $proyecto->save();
+
         return $proyecto->id;
     }
 
-    private function createIntegrante(Request $request, $numIntegrante,
-                                      $idProyecto)
+    public function deleteProject(Request $request) {
+        $rules = [
+            'proyecto_id' => ['required']
+        ];
+
+        $messages = [
+            'proyecto_id.required' => 'El id del proyecto es requerido'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->jsonResponse(400, [
+                'errors' => $validator->errors()->all(),
+                'request' => $request->all()]);
+        }
+
+        try {
+            $proyecto = Proyecto::find($request['proyecto_id']);
+
+            if($proyecto) {
+                $proyecto->delete();
+
+                return $this->jsonResponse(200, [
+                    'message' => 'Proyecto eliminado correctamente'
+                ]);
+            }
+
+            return $this->jsonResponse(200, [
+                'message' => 'El proyecto ya no existe'
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse(400, ['errors' => var_dump($e)]);
+        }
+    }
+
+    public function registerIntegrante(Request $request)
+    {
+        $numIntegrante = $request['numIntegrante'];
+        $validator = $this->createIntegranteValidator($request, $numIntegrante);
+
+        if ($validator->fails()) {
+            return $this->jsonResponse(400, [
+                'errors' => $validator->errors()->all(),
+                'request' => $request->all()]);
+        }
+
+        $idProyecto = $request['proyectoId'];
+
+        try {
+            $idIntegrante = $this->saveIntegranteInstance($request,
+                $numIntegrante, $idProyecto);
+
+            return $this->jsonResponse(200, [
+                'integrante_id' => $idIntegrante
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse(400, ['errors' => var_dump($e)]);
+        }
+    }
+
+    private function createIntegranteValidator(Request $request, $numIntegrante)
+    {
+        $rules = [
+            'numIntegrante' => ['required'],
+            'proyectoId' => ['required'],
+            'nombreIntegrante' => 'required',
+            'priApellido' => 'required',
+            'fechaNacimiento' => 'required',
+            'nivelEstudios' => 'required',
+            'email' => ['required', 'email', 'unique:integrante,email'],
+            'carrera' => 'required',
+            'universidad' => 'required',
+            'titulo' => ['required', 'mimes:pdf'],
+            'constanciaEstudios' => ['required', 'mimes:pdf'],
+            'constanciaObligaciones' => ['required', 'mimes:pdf'],
+            'ine' => ['required', 'mimes:pdf'],
+            'curp' => ['required', 'mimes:pdf'],
+            'oficioProtesta' => ['required', 'mimes:pdf'],
+            'rfc' => ['required', 'mimes:pdf'],
+            'cartaSat' => ['required', 'mimes:pdf']
+        ];
+
+        $messages = [
+            'nombreIntegrante.required' => 'El nombre del integrante ' .
+                $numIntegrante . ' es requerido',
+            'priApellido.required' => 'El primer apellido del integrante ' .
+                $numIntegrante . ' es requerido',
+            'fechaNacimiento.required' => 'La fecha de nacimiento del ' .
+                'integrante ' . $numIntegrante . ' es requerida',
+            'nivelEstudios.required' => 'El nivel de estudios del integrante ' .
+                $numIntegrante . ' es requerido',
+            'email.required' => 'El email del integrante ' . $numIntegrante .
+                ' es requerido',
+            'email.email' => 'El email del integrante ' . $numIntegrante .
+                ' tiene un formato incorrecto',
+            'email.unique' => 'El email del integrante ' . $numIntegrante .
+                ' ya está siendo usado',
+            'carrera.required' => 'La carrera del integrante ' .
+                $numIntegrante . ' es requerida',
+            'universidad.required' => 'La universidad del integrante ' .
+                $numIntegrante . ' es requerida',
+            'titulo.required' => 'El título profesional del integrante ' .
+                $numIntegrante . ' es requerido',
+            'titulo.mimes' => 'El título profesional del integrante ' .
+                $numIntegrante . ' debe ser un archivo pdf',
+            'constanciaEstudios.required' => 'La constancia de estudios ' .
+                'del integrante ' . $numIntegrante . ' es requerida',
+            'constanciaEstudios.mimes' => 'La constancia de estudios ' .
+                'del integrante ' . $numIntegrante . ' debe ser un archivo pdf',
+            'constanciaObligaciones.required' => 'La constancia de ' .
+                'obligaciones del integrante ' . $numIntegrante .
+                ' es requerida',
+            'constanciaObligaciones.mimes' => 'La constancia de ' .
+                'obligaciones del integrante ' . $numIntegrante .
+                ' debe ser un archivo pdf',
+            'ine.required' => 'La INE del integrante ' . $numIntegrante .
+                ' es requerida',
+            'ine.mimes' => 'La INE del integrante ' . $numIntegrante .
+                ' debe ser un archivo pdf',
+            'curp.required' => 'La CURP del integrante ' . $numIntegrante .
+                ' es requerida',
+            'curp.mimes' => 'La CURP del integrante ' . $numIntegrante .
+                ' debe ser un archivo pdf',
+            'oficioProtesta.required' => 'El oficio bajo protesta de decir ' .
+                'verdad del integrante ' . $numIntegrante . ' es requerido',
+            'oficioProtesta.mimes' => 'El oficio bajo protesta de decir ' .
+                'verdad del integrante ' . $numIntegrante .
+                ' debe ser un archivo pdf',
+            'rfc.required' => 'El rfc del integrante ' . $numIntegrante .
+                ' es requerido',
+            'rfc.mimes' => 'El rfc del integrante ' . $numIntegrante .
+                ' debe ser un archivo pdf',
+            'cartaSat.required' => 'La carta de opinión positiva del SAT ' .
+                'del integrante ' . $numIntegrante . ' es requerida',
+            'cartaSat.mimes' => 'La carta de opinión positiva del SAT ' .
+                'del integrante ' . $numIntegrante . ' debe ser un archivo pdf'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return $validator;
+    }
+
+    private function saveIntegranteInstance(Request $request, $numIntegrante,
+                                            $idProyecto)
     {
         $integrante = new Integrante();
-        $integrante->nombre = $request['nombreIntegrante' . $numIntegrante];
-        $integrante->pri_apellido = $request['priApellido' . $numIntegrante];
-        $integrante->seg_apellido = $request['segApellido' . $numIntegrante];
-        $integrante->email = $request['email' . $numIntegrante];
-        $integrante->nacimiento = $request['fechaNacimiento' . $numIntegrante];
-        $integrante->nivel_estudio = $request['nivelEstudios' . $numIntegrante];
-        $integrante->carrera = $request['carrera' . $numIntegrante];
-        $integrante->universidad = $request['universidad' . $numIntegrante];
+        $integrante->nombre = $request['nombreIntegrante'];
+        $integrante->pri_apellido = $request['priApellido'];
+        $integrante->seg_apellido = $request['segApellido'];
+        $integrante->email = $request['email'];
+        $integrante->nacimiento = $request['fechaNacimiento'];
+        $integrante->nivel_estudio = $request['nivelEstudios'];
+        $integrante->carrera = $request['carrera' ];
+        $integrante->universidad = $request['universidad'];
 
         $integrante->save();
 
-        $titulo = $request->file('titulo' . $numIntegrante);
+        $titulo = $request->file('titulo');
         $tituloName = 'titulo_' . $integrante->id . '.pdf';
-        $constanciaEstudios = $request->file('constanciaEstudios' .
-            $numIntegrante);
-        $constanciaEstudiosName = 'constanciaEstudios_' . $integrante->id .
-            '.pdf';
-        $constanciaObligaciones = $request->file('constanciaObligaciones' .
-            $numIntegrante);
+        $constanciaEstudios = $request->file('constanciaEstudios');
+        $constanciaEstudiosName = 'constanciaEstudios_' . $integrante->id . '.pdf';
+        $constanciaObligaciones = $request->file('constanciaObligaciones');
         $constanciaObligacionesName = 'constanciaObligaciones_' .
             $integrante->id . '.pdf';
-        $ine = $request->file('ine' . $numIntegrante);
+        $ine = $request->file('ine');
         $ineName = 'ine_' . $integrante->id . '.pdf';
-        $curp = $request->file('curp' . $numIntegrante);
+        $curp = $request->file('curp');
         $curpName = 'curp_' . $integrante->id . '.pdf';
-        $oficioProtesta = $request->file('oficioProtesta' . $numIntegrante);
+        $oficioProtesta = $request->file('oficioProtesta');
         $oficioProtestaName = 'oficioProtesta_' . $integrante->id . '.pdf';
+        $rfc = $request->file('rfc');
+        $rfcName = 'rfc_' . $integrante->id . '.pdf';
+        $cartaSat = $request->file('cartaSat');
+        $cartaSatName = 'cartaSat_' . $integrante->id . '.pdf';
         $this->saveFile($titulo, 'solicitudes', $tituloName);
         $this->saveFile($constanciaEstudios, 'solicitudes',
             $constanciaEstudiosName);
@@ -226,6 +295,8 @@ class ProyectoController extends Controller
         $this->saveFile($ine, 'solicitudes', $ineName);
         $this->saveFile($curp, 'solicitudes', $curpName);
         $this->saveFile($oficioProtesta, 'solicitudes', $oficioProtestaName);
+        $this->saveFile($rfc, 'solicitudes', $rfcName);
+        $this->saveFile($cartaSat, 'solicitudes', $cartaSatName);
 
         $integrante->titulo_profesional = $tituloName;
         $integrante->constancia_estudios = $constanciaEstudiosName;
@@ -233,6 +304,8 @@ class ProyectoController extends Controller
         $integrante->ine = $ineName;
         $integrante->curp = $curpName;
         $integrante->protesta_verdad = $oficioProtestaName;
+        $integrante->rfc = $rfcName;
+        $integrante->carta_sat = $cartaSatName;
 
         $integrante->save();
 
@@ -256,8 +329,6 @@ class ProyectoController extends Controller
 
     public function showProyectosPage(Request $request)
     {
-        $proyectos = Proyecto::all();
-
         $proyectos = DB::table('proyecto as p')
             ->join('proyecto_has_integrante as pi', 'p.id', '=',
                 'pi.proyecto_id')
@@ -283,7 +354,7 @@ class ProyectoController extends Controller
             ->where('pi.proyecto_id', '=', $projectId)
             ->select(['i.titulo_profesional', 'i.constancia_estudios',
                 'i.constancia_obligaciones', 'i.ine', 'i.curp',
-                'i.protesta_verdad'])
+                'i.protesta_verdad', 'i.rfc', 'i.carta_sat'])
             ->get();
 
         foreach ($integrantes as $integrante) {
@@ -293,6 +364,8 @@ class ProyectoController extends Controller
             array_push($projectFiles, $integrante->ine);
             array_push($projectFiles, $integrante->curp);
             array_push($projectFiles, $integrante->protesta_verdad);
+            array_push($projectFiles, $integrante->rfc);
+            array_push($projectFiles, $integrante->carta_sat);
         }
 
         return $projectFiles;

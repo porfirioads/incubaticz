@@ -23,7 +23,11 @@ Route::get('/registro', function () {
     return View::make('registro');
 });
 
-Route::post('/registro', 'ProyectoController@registrarProyecto');
+Route::post('/registro', 'ProyectoController@registerProject');
+
+Route::post('/registro_integrante', 'ProyectoController@registerIntegrante');
+
+Route::post('/delete_project', 'ProyectoController@deleteProject');
 
 Route::get('/login', 'AdminController@showLoginForm');
 

@@ -72,7 +72,7 @@ function generateProjectPdf() {
         }
     };
 
-    var pdf = pdfMake.createPdf(docDefinition).getBase64(prepareAndUploadPdf);
+    pdfMake.createPdf(docDefinition).getBase64(prepareAndUploadPdf);
 }
 
 function createBlobFile(base64) {
@@ -86,76 +86,16 @@ function createBlobFile(base64) {
 
     var byteArray = new Uint8Array(byteNumbers);
 
-    var blob = new Blob([byteArray], {type: 'application/pdf'});
-
-    return blob;
+    return new Blob([byteArray], {type: 'application/pdf'});
 }
 
 function prepareAndUploadPdf(base64) {
     var blob = createBlobFile(base64);
     formData.append('abstract', blob);
-    sendFormHttpRequest(formData);
+    sendRegistroProyectoHttpRequest(formData);
 }
 
-// function generateProjectAbstractPdf() {
-//     var doc = new jsPDF();
-//
-//     var specialElementHandlers = {
-//         '#editor': function (element, renderer) {
-//             return true;
-//         }
-//     };
-//
-//     var abstractHtml = '<h1>$titulo</h1>' +
-//         '<h2>Descripción</h2>' +
-//         '<p>$descripcion</p>' +
-//         '<h2>Impacto Social</h2>' +
-//         '<p>$impactoSocial</p>' +
-//         '<h2>Análisis de Factibilidad del Proyecto</h2>' +
-//         '<p>$factibilidad</p>' +
-//         '<h2>Cronograma de Actividades</h2>' +
-//         '<p>$cronograma</p>' +
-//         '<h2>Metodología</h2>' +
-//         '<p>$metodologia</p>' +
-//         '<h2>Resultados Esperados</h2>' +
-//         '<p>$resultados</p>' +
-//         '<h2>Plan de Negocios</h2>' +
-//         '<p>$plan</p>'+
-//         '<p>&aacute;</p>'+
-//         '<p>\u00E1</p>'+
-//         '<p>&#xE1;</p>';
-//
-//     var titulo = $('#txtNombreProyecto').val();
-//     var descripcion = $('#txtDescripcion').val();
-//     var impactoSocial = $('#txtImpactoSocial').val();
-//     var factibilidad = $('#txtFactibilidad').val();
-//     var cronograma = $('#txtCronograma').val();
-//     var metodologia = $('#txtMetodologia').val();
-//     var resultados = $('#txtResultados').val();
-//     var plan = $('#txtPlanNegocios').val();
-//
-//     abstractHtml = abstractHtml.replace('$titulo', titulo);
-//     abstractHtml = abstractHtml.replace('$descripcion', descripcion);
-//     abstractHtml = abstractHtml.replace('$impactoSocial', impactoSocial);
-//     abstractHtml = abstractHtml.replace('$factibilidad', factibilidad);
-//     abstractHtml = abstractHtml.replace('$cronograma', cronograma);
-//     abstractHtml = abstractHtml.replace('$metodologia', metodologia);
-//     abstractHtml = abstractHtml.replace('$resultados', resultados);
-//     abstractHtml = abstractHtml.replace('$plan', plan);
-//
-//     console.log(abstractHtml);
-//
-//     doc.fromHTML(abstractHtml, 15, 15, {
-//         'width': 170,
-//         'elementHandlers': specialElementHandlers
-//     });
-//
-//     return doc;
-// }
-
-//////////////
-
-function sendFormHttpRequest(formData) {
+function sendRegistroProyectoHttpRequest(formData) {
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
     });
@@ -167,24 +107,88 @@ function sendFormHttpRequest(formData) {
         contentType: false,
         success: function (data) {
             console.log('success', data);
-            $('#modalExitoRegistro').modal();
+            var formsIntegrantes = $('form.formIntegranteProyecto');
+            formsIntegrantes.find('.proyectoId').val(data.proyecto_id);
+            var integranteIndex = 1;
+            console.log('hay ' + formsIntegrantes.length + ' forms de' +
+                ' integrantes')
+
+            formsIntegrantes.each(function (index) {
+                formData = new FormData(this);
+                var lastIntegrante = integranteIndex == formsIntegrantes.length;
+                sendRegistroIntegranteHttpRequest(formData, data.proyecto_id, lastIntegrante);
+                integranteIndex++;
+            });
         },
         error: function (data) {
-            var modalBody = registroErrorsContainer.find('.modal-body');
-            modalBody.empty();
-            modalBody.append('<ul>');
-
-            data.responseJSON.errors.forEach(function (error, index) {
-                modalBody.append('<li>' + error + '</li>');
-            });
-
-            modalBody.append('</ul>');
-
-            console.log(modalBody);
-
-            $('#modalFalloRegistro').modal();
-
-            console.log('error', data.responseJSON);
+            showRequestErrors(data.responseJSON, 0);
         }
     });
 }
+
+function sendRegistroIntegranteHttpRequest(formData, idProyecto, last) {
+    $.ajaxSetup({
+        header: $('meta[name="_token"]').attr('content')
+    });
+    $.ajax({
+        url: '/registro_integrante',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+            if(last) {
+                $('#modalExitoRegistro').modal();
+            }
+        },
+        error: function (data) {
+            showRequestErrors(data.responseJSON, idProyecto);
+        }
+    });
+}
+
+function showRequestErrors(errorsArray, idProyecto) {
+    var modalBody = registroErrorsContainer.find('.modal-body');
+
+    modalBody.append('<ul>');
+
+    errorsArray.errors.forEach(function (error, index) {
+        modalBody.append('<li>' + error + '</li>');
+    });
+
+    modalBody.append('</ul>');
+
+    console.log(modalBody);
+
+    $('#modalFalloRegistro').modal();
+
+    if(idProyecto > 0) {
+        deleteProject(idProyecto)
+    }
+
+    console.log('error', errorsArray);
+}
+
+function deleteProject(idProyecto) {
+    $.ajaxSetup({
+        header: $('meta[name="_token"]').attr('content')
+    });
+    $.ajax({
+        type: 'POST',
+        url: '/delete_project',
+        data: {proyecto_id: idProyecto},
+        success: function(data) {
+            console.log(data)
+        },
+        error: function(error) {
+            console.log(error.responseJSON)
+        }
+    });
+}
+
+$('#modalFalloRegistro').on('hidden.bs.modal', function () {
+    var modalBody = registroErrorsContainer.find('.modal-body');
+    modalBody.empty();
+});
+
