@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Integrante;
 use App\IntegranteProyecto;
 use App\Proyecto;
+use App\ProyectoHasIntegrante;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -111,7 +112,8 @@ class ProyectoController extends Controller
         return $proyecto->id;
     }
 
-    public function deleteProject(Request $request) {
+    public function deleteProject(Request $request)
+    {
         $rules = [
             'proyecto_id' => ['required']
         ];
@@ -131,7 +133,23 @@ class ProyectoController extends Controller
         try {
             $proyecto = Proyecto::find($request['proyecto_id']);
 
-            if($proyecto) {
+            if ($proyecto) {
+                $phis = ProyectoHasIntegrante::where('proyecto_id', '=',
+                    $proyecto->id)->get();
+
+                $integranteIds = [];
+
+                foreach ($phis as $phi) {
+                    array_push($integranteIds, $phi->integrante_id);
+                }
+
+                ProyectoHasIntegrante::where('proyecto_id', '=',
+                    $proyecto->id)->delete();
+
+
+                Integrante::whereIn('id', $integranteIds)
+                    ->delete();
+
                 $proyecto->delete();
 
                 return $this->jsonResponse(200, [
@@ -265,7 +283,7 @@ class ProyectoController extends Controller
         $integrante->email = $request['email'];
         $integrante->nacimiento = $request['fechaNacimiento'];
         $integrante->nivel_estudio = $request['nivelEstudios'];
-        $integrante->carrera = $request['carrera' ];
+        $integrante->carrera = $request['carrera'];
         $integrante->universidad = $request['universidad'];
 
         $integrante->save();

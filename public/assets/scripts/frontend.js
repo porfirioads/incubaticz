@@ -17685,10 +17685,6 @@ $('#modalFalloRegistro').on('hidden.bs.modal', function () {
 
 var loginErrorsContainer = $('#modalFalloLogin');
 
-$('#modalExitoRegistro').on('hidden.bs.modal', function () {
-    window.location = '/';
-});
-
 $('#formLogin').on('submit', function (e) {
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
