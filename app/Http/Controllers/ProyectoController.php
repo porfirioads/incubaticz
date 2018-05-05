@@ -275,6 +275,7 @@ class ProyectoController extends Controller
         $projectFiles = [];
         $proyecto = Proyecto::find($projectId);
         array_push($projectFiles, $proyecto->anteproyecto);
+        array_push($projectFiles, $proyecto->abstract);
 
         $integrantes = DB::table('integrante as i')
             ->join('proyecto_has_integrante as pi',
