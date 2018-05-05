@@ -17482,7 +17482,7 @@ $('#selIntegrantes').change(function () {
         integrantesContainer.append(integranteClone.html());
 
         $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             endDate: '0d',
             startView: 'decades'
         });
