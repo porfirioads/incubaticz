@@ -1,7 +1,7 @@
 var registroErrorsContainer = $('#modalFalloRegistro');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
-    window.location = '/';
+    window.location = '../';
 });
 
 var formData = undefined;

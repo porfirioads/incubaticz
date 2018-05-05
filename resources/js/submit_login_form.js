@@ -17,7 +17,7 @@ $('#formLogin').on('submit', function (e) {
         contentType: false,
         success: function (data) {
             console.log(data);
-            window.location = '/';
+            window.location = '../';
         },
         error: function (data) {
             console.log(data);

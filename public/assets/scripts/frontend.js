@@ -17491,7 +17491,7 @@ $('#selIntegrantes').change(function () {
 var registroErrorsContainer = $('#modalFalloRegistro');
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
-    window.location = '/';
+    window.location = '../';
 });
 
 var formData = undefined;
@@ -17702,7 +17702,7 @@ $('#formLogin').on('submit', function (e) {
         contentType: false,
         success: function (data) {
             console.log(data);
-            window.location = '/';
+            window.location = '../';
         },
         error: function (data) {
             console.log(data);
