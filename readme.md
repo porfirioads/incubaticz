@@ -4,24 +4,47 @@ Este proyecto es una plataforma para el registro de proyectos al Programa de
 apoyo para la incubación de empresas de tecnologías de información y 
 comunicación (INCUBATICZ)
 
+## Requisitos
+
+- PHP
+- MySQL
+- Composer
+
 ## Instrucciones de instalación
 
-**Clonar el proyecto**
-
-**Asegurarse de tener instalado composer, npm, bower y gulp**
-
-**Ejecutar los siguientes comandos en la terminal:**
+**Clonar proyecto:**
 
 ```bash
-sudo chmod 777 storage
-composer install
-npm install
-bower install
-gulp watch
-php artisan cache:clear
-``` 
+git clone https://github.com/porfirioangel/INCUBATICZ
+```
 
-**Copiar el archivo .env.example y renombrarlo a .env**
+**Instalar dependencias de Linux:**
+
+```bash
+sudo apt install zip
+```
+
+**Instalar extensiones de PHP:**
+
+```bash
+sudo apt install php7.2-xml
+```
+
+**Crea carpeta de caché y asigna personas:**
+
+```
+mkdir bootstrap/cache
+sudo chmod 755 bootstrap/cache
+composer install
+```
+
+**Instalar dependencias:**
+
+```bash
+composer install
+```
+
+**Crear archivo de variables de entorno:**
 ```
 cp .env.example .env
 ```
@@ -36,12 +59,14 @@ DB_USERNAME=myuser
 DB_PASSWORD=mypassword
 ```
 
-**Generar la llave para la aplicación**
+**Generar la llave para la aplicación:**
+
 ```
 php artisan key:generate
 ```
 
 **Correr las migraciones y seeders:**
+
 ```
 php artisan migrate:fresh --seed
 ```
@@ -49,13 +74,4 @@ php artisan migrate:fresh --seed
 **Correr proyecto:**
 ```
 php artisan serve --host 0.0.0.0 --port 8000
-```
-
-
-## Solución de errores
-
-**laravel/framework v5.x.x requires ext-mcrypt:**
-
-```bash
-sudo apt-get install php7.0-mcrypt
 ```
