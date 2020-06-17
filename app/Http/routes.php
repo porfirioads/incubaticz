@@ -19,6 +19,18 @@ Route::get('/convocatoria', function () {
     return View::make('convocatoria');
 });
 
+Route::get('convocatoria_download', function () {
+    return response()->download(storage_path('../public/assets/res/convocatoria.pdf'));
+});
+
+Route::get('ficha_tecnica_download', function () {
+    return response()->download(storage_path('../public/assets/res/ficha_tecnica.pdf'));
+});
+
+Route::get('terminos_referencia_download', function () {
+    return response()->download(storage_path('../public/assets/res/terminos_referencia.pdf'));
+});
+
 Route::get('/registro', function () {
     return View::make('registro');
 });

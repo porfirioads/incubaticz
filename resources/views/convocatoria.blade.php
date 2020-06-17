@@ -8,15 +8,15 @@
 
 @section ('dpanel_panel_body')
     <div class="list-group">
-        <a href="{{URL::to('assets/res/Convocatoria INCUBATICZ 2018.pdf')}}"
+        <a href="{{ url ('convocatoria_download') }}"
            class="list-group-item" target="_blank">
             Convocatoria
         </a>
-        <a href="{{URL::to('assets/res/Términos de referencia INCUBATICZ 2018.pdf')}}"
+        <a href="{{ url ('terminos_referencia_download') }}"
            class="list-group-item" target="_blank">
             Términos de Referencia
         </a>
-        <a href="{{URL::to('assets/res/Ficha técnica INCUBATICZ.pdf')}}"
+        <a href="{{ url ('ficha_tecnica_download') }}"
            class="list-group-item" target="_blank">
             Ficha Técnica
         </a>
