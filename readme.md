@@ -73,6 +73,22 @@ CREATE DATABASE mydatabase;
 quit
 ```
 
+**Crear usuario de base de datos:**
+
+```bash
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON incubaticz.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+**Corrección de errores de MySQL:**
+
+```bash
+
+# SQLSTATE[HY000] [2054] The server requested authentication method unknown to the client
+ALTER USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```
+
 **Correr las migraciones y seeders:**
 
 ```bash
