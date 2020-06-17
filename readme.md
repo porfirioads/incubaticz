@@ -50,7 +50,7 @@ cp .env.example .env
 ```
 
 **Configurar la base de datos en el archivo .env:**
-```
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -61,17 +61,25 @@ DB_PASSWORD=mypassword
 
 **Generar la llave para la aplicación:**
 
-```
+```bash
 php artisan key:generate
+```
+
+**Crear base de datos:**
+
+```bash
+mysql -u root -p
+CREATE DATABASE mydatabase;
+quit
 ```
 
 **Correr las migraciones y seeders:**
 
-```
+```bash
 php artisan migrate:refresh --seed
 ```
 
 **Correr proyecto:**
-```
+```bash
 php artisan serve --host 0.0.0.0 --port 8000
 ```
