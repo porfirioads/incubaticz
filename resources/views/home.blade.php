@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
-@section('page_heading','INCUBATICZ')
+
 
 @section('section')
     <div class="col-sm-12">
         <div class="row">
-            <div class="col-lg-12">
-                <img src="{{URL::asset('assets/img/Incubaticz flyer.png')}}"
+            <div class="col-md-8 col-sm-12 col-md-offset-2">
+                <img src="{{URL::asset('assets/img/flyer.jpg')}}"
                      class="img-responsive"/>
             </div>
         </div>
@@ -48,8 +48,8 @@
                                     <p>
                                         Apoyar a jóvenes emprendedores que estén
                                         cursando el último año de su programa de
-                                        estudio y/o aquellos que tengan por lo
-                                        menos un año de egresados de las
+                                        estudio y/o aquellos que tengan máximo 
+                                        dos años de egresados de las
                                         carreras con base científica y
                                         tecnológica; en la creación y
                                         consolidación de empresas de base
@@ -74,7 +74,7 @@
                                 <div class="timeline-body">
                                     <p>
                                         Equipo integrado por 3 jóvenes
-                                        emprendedores que tengan máximo un año
+                                        emprendedores que tengan máximo dos años 
                                         de haber egresado de los planes de
                                         estudio de las Instituciones de
                                         Educación Superior del Estado de
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="timeline-body">
                                     <p>
-                                        Del 25 de abril al 23 de mayo de 2018
+                                        Del 01 de junio al 5 de julio de 2020
                                     </p>
                                 </div>
                             </div>
@@ -167,8 +167,7 @@
                                 </div>
                                 <div class="timeline-body">
                                     <p>
-                                        Del 1 de junio al 31 de diciembre de
-                                        2018
+                                        Del 1 de junio al 31 de diciembre de 2020
                                     </p>
                                 </div>
                             </div>
