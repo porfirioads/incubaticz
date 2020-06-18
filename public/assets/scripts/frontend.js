@@ -17492,7 +17492,7 @@ var registroErrorsContainer = $('#modalFalloRegistro');
 var formData = undefined;
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
-    window.location = '../';
+    window.location = '../index.php';
 });
 
 $('#formRegistroProyecto').on('submit', function (e) {
@@ -17716,7 +17716,7 @@ $('#formLogin').on('submit', function (e) {
         contentType: false,
         success: function (data) {
             console.log(data);
-            window.location = '../';
+            window.location = '../index.php';
         },
         error: function (data) {
             console.log(data);
