@@ -2,6 +2,18 @@
 @section('page_heading', 'Registro')
 
 @section('section')
+    <div class="modal fade" id="modalRegistrando" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h1>Registrando proyecto, espere un momento por favor</h1>
+                    <img src="{{URL::asset('assets/img/spinner.gif')}}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modalExitoRegistro" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -270,170 +282,6 @@
                     </form>
                 </div>
 
-            <!--
-                <div id="integranteTemplate" class="hidden">
-                    <form class="formIntegranteProyecto"
-                          role="form" action="{{URL('/registro_integrante')}}"
-                          enctype="multipart/form-data" method="POST">
-
-                        <input type="hidden" name="_token"
-                               value="{{ csrf_token() }}">
-
-                        <input type="hidden" id="numIntegrante"
-                               name="numIntegrante">
-
-                        <input type="hidden" id="proyectoId"
-                               name="proyectoId">
-
-                        <h4 class="numIntegrante"></h4>
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group nombreIntegrante">
-                                    <label>Nombre:</label>
-                                    <input type="text"
-                                           class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group priApellido">
-                                    <label>Primer apellido:</label>
-                                    <input type="text"
-                                           class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group segApellido">
-                                    <label>Segundo apellido:</label>
-                                    <input type="text"
-                                           class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group email">
-                                    <label>Email:</label>
-                                    <input type="email"
-                                           class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group fechaNacimiento">
-                                    <label>Fecha de nacimiento:</label>
-                                    <input type="text"
-                                           class="form-control datepicker">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-2 col-md-4 col-sm-12">
-                                <div class="form-group nivelEstudios">
-                                    <label>Nivel de estudios:</label>
-                                    <select class="form-control">
-                                        <option selected="selected"
-                                                disabled="disabled"
-                                                value="0"></option>
-                                        <option value="Por egresar">
-                                            Por egresar
-                                        </option>
-                                        <option value="Licenciatura">
-                                            Licenciatura
-                                        </option>
-                                        <option value="Posgrado">
-                                            Posgrado
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-md-8 col-sm-12">
-                                <div class="form-group carrera">
-                                    <label>Carrera o posgrado:</label>
-                                    <input type="text"
-                                           class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-md-12 col-sm-12">
-                                <div class="form-group universidad">
-                                    <label>Universidad:</label>
-                                    <input type="text"
-                                           class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group titulo">
-                                    <label>Título profesional:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group constanciaEstudios">
-                                    <label>Constancia de estudios:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group constanciaObligaciones">
-                                    <label>Constancia de obligaciones
-                                        académicas:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group ine">
-                                    <label>INE:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group curp">
-                                    <label>CURP:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group oficioProtesta">
-                                    <label>Oficio de protesta de decir
-                                        verdad:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group rfc">
-                                    <label>RFC:</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group cartaSat">
-                                    <label>
-                                        Carta de opinión positiva del SAT:
-                                    </label>
-                                    <input type="file">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                -->
             @endsection
 
             @include ('widgets.panel', array('class'=>'default', 'header'=>true,

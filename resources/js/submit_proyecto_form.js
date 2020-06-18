@@ -95,6 +95,7 @@ function prepareAndUploadPdf(base64) {
 }
 
 function sendRegistroProyectoHttpRequest(formData) {
+    
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
     });
@@ -113,13 +114,6 @@ function sendRegistroProyectoHttpRequest(formData) {
                 ' integrantes');
 
             sendRegistroIntegranteForm(formsIntegrantes, 0, data.proyecto_id);
-
-            // formsIntegrantes.each(function (index) {
-            //     formData = new FormData(this);
-            //     var lastIntegrante = integranteIndex == formsIntegrantes.length;
-            //     sendRegistroIntegranteHttpRequest(formData, data.proyecto_id, lastIntegrante);
-            //     integranteIndex++;
-            // });
         },
         error: function (data) {
             showRequestErrors(data.responseJSON, 0);
