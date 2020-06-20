@@ -13,7 +13,7 @@ $('#formLogin').on('submit', function (e) {
         contentType: false,
         success: function (data) {
             console.log(data);
-            window.location = '../';
+            window.location = '../index.php';
         },
         error: function (data) {
             console.log(data);

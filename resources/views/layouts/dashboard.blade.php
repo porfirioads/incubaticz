@@ -75,6 +75,10 @@
                         @endif
                     </ul>
                 </div>
+                <div class="sidebar-nav navbar-collapse labsol-logo">
+                    <p>Desarrollado por:</p>
+                    <img src="{{URL::asset('assets/img/labsol.png')}}"/>
+                </div>
             </div>
         </nav>
 

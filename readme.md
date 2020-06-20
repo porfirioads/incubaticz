@@ -38,10 +38,28 @@ sudo chmod 755 bootstrap/cache
 composer install
 ```
 
-**Instalar dependencias:**
+**Instalar dependencias de php:**
 
 ```bash
 composer install
+```
+
+**Instalar dependencias de javascript:**
+
+```bash
+# Instala manejadores de minificación y dependencias.
+npm install --global gulp-cli
+npm install -g bower
+
+# Instala dependencias del proyecto.
+npm install
+bower install
+
+# Corre tareas de gulp.
+gulp
+
+# Corre tareas de gulp y minifica CSS y JavaScript.
+gulp --production
 ```
 
 **Crear archivo de variables de entorno:**

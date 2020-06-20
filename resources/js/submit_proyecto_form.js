@@ -2,7 +2,7 @@ var registroErrorsContainer = $('#modalFalloRegistro');
 var formData = undefined;
 
 $('#modalExitoRegistro').on('hidden.bs.modal', function () {
-    window.location = '../';
+    window.location = '../index.php';
 });
 
 $('#formRegistroProyecto').on('submit', function (e) {
@@ -95,6 +95,10 @@ function prepareAndUploadPdf(base64) {
 }
 
 function sendRegistroProyectoHttpRequest(formData) {
+    $('#modalRegistrando').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
     
     $.ajaxSetup({
         header: $('meta[name="_token"]').attr('content')
@@ -157,6 +161,10 @@ function sendRegistroIntegranteHttpRequest(formData, successCallback, errorCallb
 }
 
 function showRequestErrors(errorsArray, idProyecto) {
+    setTimeout(() => {
+        $('#modalRegistrando').modal('hide');
+    }, 500);
+
     var modalBody = registroErrorsContainer.find('.modal-body');
 
     modalBody.append('<ul>');
@@ -167,9 +175,9 @@ function showRequestErrors(errorsArray, idProyecto) {
 
     modalBody.append('</ul>');
 
-    console.log(modalBody);
-
-    $('#modalFalloRegistro').modal();
+    setTimeout(() => {
+        $('#modalFalloRegistro').modal();
+    }, 1000);
 
     if (idProyecto > 0) {
         deleteProject(idProyecto)

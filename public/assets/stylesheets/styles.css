@@ -8966,6 +8966,16 @@ h6 {
     background-color: #d9534f;
     color: white;
 }
+
+.labsol-logo {
+    margin: 10px;
+    text-align: center;
+    border: solid;
+}
+
+.labsol-logo img {
+    width: 40%;
+}
 .timeline {
     position: relative;
     padding: 20px 0 20px;
